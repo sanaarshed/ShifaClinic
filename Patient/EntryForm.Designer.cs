@@ -66,6 +66,11 @@
             this.dgvPatientList = new System.Windows.Forms.DataGridView();
             this.txtSearchByName = new System.Windows.Forms.TextBox();
             this.label14 = new System.Windows.Forms.Label();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.fullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mobileNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
             txtMobileNumber = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -430,13 +435,23 @@
             // 
             // dgvPatientList
             // 
+            this.dgvPatientList.AllowUserToAddRows = false;
+            this.dgvPatientList.AllowUserToDeleteRows = false;
             this.dgvPatientList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvPatientList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvPatientList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
+            this.fullName,
+            this.email,
+            this.mobileNumber,
+            this.gender});
             this.dgvPatientList.Location = new System.Drawing.Point(389, 120);
             this.dgvPatientList.Name = "dgvPatientList";
+            this.dgvPatientList.ReadOnly = true;
             this.dgvPatientList.Size = new System.Drawing.Size(573, 347);
             this.dgvPatientList.TabIndex = 35;
+            this.dgvPatientList.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPatientList_RowEnter);
             // 
             // txtSearchByName
             // 
@@ -455,6 +470,41 @@
             this.label14.TabIndex = 38;
             this.label14.Text = "Search By Patient Name";
             // 
+            // id
+            // 
+            this.id.DataPropertyName = "id";
+            this.id.HeaderText = "#";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            // 
+            // fullName
+            // 
+            this.fullName.DataPropertyName = "fullName";
+            this.fullName.HeaderText = "Name";
+            this.fullName.Name = "fullName";
+            this.fullName.ReadOnly = true;
+            // 
+            // email
+            // 
+            this.email.DataPropertyName = "fullName";
+            this.email.HeaderText = "Email";
+            this.email.Name = "email";
+            this.email.ReadOnly = true;
+            // 
+            // mobileNumber
+            // 
+            this.mobileNumber.DataPropertyName = "mobileNumber";
+            this.mobileNumber.HeaderText = "Mobile";
+            this.mobileNumber.Name = "mobileNumber";
+            this.mobileNumber.ReadOnly = true;
+            // 
+            // gender
+            // 
+            this.gender.DataPropertyName = "gender";
+            this.gender.HeaderText = "Gender";
+            this.gender.Name = "gender";
+            this.gender.ReadOnly = true;
+            // 
             // frmEntryForm
             // 
             this.ClientSize = new System.Drawing.Size(977, 546);
@@ -470,6 +520,7 @@
             this.Name = "frmEntryForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Patient Entry";
+            this.Load += new System.EventHandler(this.frmEntryForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -536,5 +587,10 @@
         private System.Windows.Forms.DataGridView dgvPatientList;
         private System.Windows.Forms.TextBox txtSearchByName;
         private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
+        private System.Windows.Forms.DataGridViewTextBoxColumn fullName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn email;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mobileNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gender;
     }
 }

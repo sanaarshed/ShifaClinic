@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShifaClinic.DataContext;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -26,14 +27,14 @@ namespace ShifaClinic.Patient
                 this.formError.SetError(txtPatientName, "");
             }
 
-            if (string.IsNullOrEmpty(txtMobileNumber.Text))
-            {
-                this.formError.SetError(txtMobileNumber, "This field is required");
-            }
-            else
-            {
-                this.formError.SetError(txtMobileNumber, "");
-            }
+            //if (string.IsNullOrEmpty(txtMobileNumber.Text))
+            //{
+            //    this.formError.SetError(txtMobileNumber, "This field is required");
+            //}
+            //else
+            //{
+            //    this.formError.SetError(txtMobileNumber, "");
+            //}
 
 
             return result;
@@ -68,6 +69,29 @@ namespace ShifaClinic.Patient
             if (MessageBox.Show("There is some error on form", "Error!", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
             }
+        }
+
+        private void frmEntryForm_Load(object sender, EventArgs e)
+        {
+            using (var db = new clinicDbContext())
+            {
+                var list = db.Users.ToList();
+                dgvPatientList.AutoGenerateColumns = false;
+                dgvPatientList.DataSource = list;
+            }
+        }
+
+        private void dgvPatientList_RowEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            var id = int.Parse(dgvPatientList.Rows[e.RowIndex].Cells[0].Value.ToString());
+            using (var db = new clinicDbContext()) {
+                var user = db.Users.Where(c => c.id == id).FirstOrDefault();
+                if (user != null)
+                {
+                    //txtFatherName.Text = user.fullName;
+                }
+            }
+
         }
     }
 }

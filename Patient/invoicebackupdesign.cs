@@ -7,24 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ShifaClinic.DataContext;
 
-namespace ShifaClinic.Session
+namespace ShifaClinic.Patient
 {
-    public partial class RoleForm : Form
+    public partial class invoicebackupdesign : Form
     {
-        public RoleForm()
+        public invoicebackupdesign()
         {
             InitializeComponent();
         }
 
-        private void bindRoleList()
+        private void btnSaveInvoice_Click(object sender, EventArgs e)
         {
-            this.dgvRoleList.AutoGenerateColumns = false;
-        }
-
-        private void RoleForm_Load(object sender, EventArgs e)
-        {
-            bindRoleList();
+           
         }
     }
 }
