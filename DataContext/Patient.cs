@@ -21,14 +21,12 @@ namespace ShifaClinic.DataContext
         [StringLength(50)]
         public string fullName { get; set; }
 
-        [StringLength(20)]
+        [StringLength(50)]
         public string mobileName { get; set; }
 
-        [StringLength(20)]
-        public string gender { get; set; }
+        public bool? gender { get; set; }
 
-        [StringLength(50)]
-        public string DOB { get; set; }
+        public int? age { get; set; }
 
         [StringLength(50)]
         public string CNIC { get; set; }
@@ -38,6 +36,9 @@ namespace ShifaClinic.DataContext
         public double? hight { get; set; }
 
         public double? bloodPressure { get; set; }
+
+        [StringLength(50)]
+        public string bloodGroup { get; set; }
 
         [StringLength(50)]
         public string fatherName { get; set; }

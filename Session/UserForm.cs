@@ -58,10 +58,10 @@ namespace ShifaClinic.Session
         {
             var _source = db.Users.ToList();
 
-            List<DataSets.User> _users = new List<DataSets.User>();
+            List<POCO.User> _users = new List<POCO.User>();
             foreach (var u in _source)
             {
-                var _nu = new DataSets.User();
+                var _nu = new POCO.User();
                 _nu.id = u.id;
                 _nu.username = u.username;
                 _nu.email = u.email;

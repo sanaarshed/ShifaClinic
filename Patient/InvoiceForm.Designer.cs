@@ -40,6 +40,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gbPatientDetail = new System.Windows.Forms.GroupBox();
+            this.txtHight = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.rbMale = new System.Windows.Forms.RadioButton();
             this.rbFemale = new System.Windows.Forms.RadioButton();
@@ -64,12 +67,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.txtPatientId = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.btnNewInvoice = new System.Windows.Forms.Button();
-            this.btnSaveInvoice = new System.Windows.Forms.Button();
-            this.btnPrintInvoice = new System.Windows.Forms.Button();
-            this.btnExit = new System.Windows.Forms.Button();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.gvPatientList = new System.Windows.Forms.DataGridView();
             this.PatientId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gvPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,9 +75,12 @@
             this.gvPatientCNIC = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gvPatientMobile = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gvPatientFatherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvPatientMotherName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvPatientHomeAddress = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.gvPatientCheckupFee = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label13 = new System.Windows.Forms.Label();
+            this.btnNewInvoice = new System.Windows.Forms.Button();
+            this.btnSaveInvoice = new System.Windows.Forms.Button();
+            this.btnPrintInvoice = new System.Windows.Forms.Button();
+            this.btnExit = new System.Windows.Forms.Button();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.txtRemarks = new System.Windows.Forms.TextBox();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
@@ -100,11 +100,13 @@
             this.lblBanalce = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.lblBillAmmount = new System.Windows.Forms.Label();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.cmbBloodGroup = new System.Windows.Forms.ComboBox();
             this.groupBox2.SuspendLayout();
             this.gbPatientDetail.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientList)).BeginInit();
+            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.groupBox5.SuspendLayout();
@@ -121,10 +123,10 @@
             this.groupBox2.Controls.Add(this.txtFee);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(16, 213);
+            this.groupBox2.Location = new System.Drawing.Point(16, 228);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(308, 127);
-            this.groupBox2.TabIndex = 24;
+            this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Appointment Detail";
             // 
@@ -146,6 +148,7 @@
             this.lblToken.Name = "lblToken";
             this.lblToken.Size = new System.Drawing.Size(77, 41);
             this.lblToken.TabIndex = 18;
+            this.lblToken.Text = "0";
             // 
             // label2
             // 
@@ -160,20 +163,23 @@
             // cmbDoctor
             // 
             this.cmbDoctor.BackColor = System.Drawing.Color.AliceBlue;
+            this.cmbDoctor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDoctor.FormattingEnabled = true;
             this.cmbDoctor.Location = new System.Drawing.Point(107, 52);
             this.cmbDoctor.Name = "cmbDoctor";
             this.cmbDoctor.Size = new System.Drawing.Size(191, 21);
-            this.cmbDoctor.TabIndex = 16;
+            this.cmbDoctor.TabIndex = 1;
             this.cmbDoctor.SelectedIndexChanged += new System.EventHandler(this.cmbDoctor_SelectedIndexChanged);
             // 
             // cmbDoctorCategory
             // 
+            this.cmbDoctorCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDoctorCategory.FormattingEnabled = true;
             this.cmbDoctorCategory.Location = new System.Drawing.Point(107, 26);
             this.cmbDoctorCategory.Name = "cmbDoctorCategory";
             this.cmbDoctorCategory.Size = new System.Drawing.Size(191, 21);
-            this.cmbDoctorCategory.TabIndex = 15;
+            this.cmbDoctorCategory.TabIndex = 0;
+            this.cmbDoctorCategory.SelectedIndexChanged += new System.EventHandler(this.cmbDoctorCategory_SelectedIndexChanged);
             // 
             // label5
             // 
@@ -192,7 +198,8 @@
             this.txtFee.Location = new System.Drawing.Point(107, 79);
             this.txtFee.Name = "txtFee";
             this.txtFee.Size = new System.Drawing.Size(47, 29);
-            this.txtFee.TabIndex = 12;
+            this.txtFee.TabIndex = 2;
+            this.txtFee.Text = "0";
             // 
             // label4
             // 
@@ -214,7 +221,10 @@
             // 
             // gbPatientDetail
             // 
-            this.gbPatientDetail.Controls.Add(this.gvPatientList);
+            this.gbPatientDetail.Controls.Add(this.cmbBloodGroup);
+            this.gbPatientDetail.Controls.Add(this.txtHight);
+            this.gbPatientDetail.Controls.Add(this.label3);
+            this.gbPatientDetail.Controls.Add(this.label26);
             this.gbPatientDetail.Controls.Add(this.panel1);
             this.gbPatientDetail.Controls.Add(this.dtpDOB);
             this.gbPatientDetail.Controls.Add(this.label17);
@@ -239,19 +249,45 @@
             this.gbPatientDetail.Controls.Add(this.label6);
             this.gbPatientDetail.Location = new System.Drawing.Point(16, 64);
             this.gbPatientDetail.Name = "gbPatientDetail";
-            this.gbPatientDetail.Size = new System.Drawing.Size(626, 143);
-            this.gbPatientDetail.TabIndex = 23;
+            this.gbPatientDetail.Size = new System.Drawing.Size(626, 158);
+            this.gbPatientDetail.TabIndex = 1;
             this.gbPatientDetail.TabStop = false;
             this.gbPatientDetail.Text = "Patient Detail";
+            // 
+            // txtHight
+            // 
+            this.txtHight.Location = new System.Drawing.Point(494, 123);
+            this.txtHight.Name = "txtHight";
+            this.txtHight.Size = new System.Drawing.Size(73, 20);
+            this.txtHight.TabIndex = 36;
+            this.txtHight.Text = "0";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(403, 130);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(41, 13);
+            this.label3.TabIndex = 37;
+            this.label3.Text = "Height:";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(403, 80);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(69, 13);
+            this.label26.TabIndex = 35;
+            this.label26.Text = "Blood Group:";
             // 
             // panel1
             // 
             this.panel1.Controls.Add(this.rbMale);
             this.panel1.Controls.Add(this.rbFemale);
-            this.panel1.Location = new System.Drawing.Point(494, 100);
+            this.panel1.Location = new System.Drawing.Point(108, 125);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(121, 23);
-            this.panel1.TabIndex = 35;
+            this.panel1.Size = new System.Drawing.Size(152, 23);
+            this.panel1.TabIndex = 7;
             // 
             // rbMale
             // 
@@ -260,7 +296,7 @@
             this.rbMale.Location = new System.Drawing.Point(3, 3);
             this.rbMale.Name = "rbMale";
             this.rbMale.Size = new System.Drawing.Size(48, 17);
-            this.rbMale.TabIndex = 28;
+            this.rbMale.TabIndex = 0;
             this.rbMale.TabStop = true;
             this.rbMale.Text = "Male";
             this.rbMale.UseVisualStyleBackColor = true;
@@ -268,10 +304,10 @@
             // rbFemale
             // 
             this.rbFemale.AutoSize = true;
-            this.rbFemale.Location = new System.Drawing.Point(56, 3);
+            this.rbFemale.Location = new System.Drawing.Point(65, 2);
             this.rbFemale.Name = "rbFemale";
             this.rbFemale.Size = new System.Drawing.Size(59, 17);
-            this.rbFemale.TabIndex = 29;
+            this.rbFemale.TabIndex = 1;
             this.rbFemale.Text = "Female";
             this.rbFemale.UseVisualStyleBackColor = true;
             // 
@@ -280,7 +316,8 @@
             this.dtpDOB.Location = new System.Drawing.Point(171, 100);
             this.dtpDOB.Name = "dtpDOB";
             this.dtpDOB.Size = new System.Drawing.Size(203, 20);
-            this.dtpDOB.TabIndex = 34;
+            this.dtpDOB.TabIndex = 3;
+            this.dtpDOB.ValueChanged += new System.EventHandler(this.dtpDOB_ValueChanged);
             // 
             // label17
             // 
@@ -308,7 +345,7 @@
             this.rbPrivate.Location = new System.Drawing.Point(494, 21);
             this.rbPrivate.Name = "rbPrivate";
             this.rbPrivate.Size = new System.Drawing.Size(58, 17);
-            this.rbPrivate.TabIndex = 31;
+            this.rbPrivate.TabIndex = 4;
             this.rbPrivate.TabStop = true;
             this.rbPrivate.Text = "Private";
             this.rbPrivate.UseVisualStyleBackColor = true;
@@ -325,7 +362,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(403, 107);
+            this.label15.Location = new System.Drawing.Point(17, 132);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(45, 13);
             this.label15.TabIndex = 16;
@@ -336,7 +373,9 @@
             this.txtAge.Location = new System.Drawing.Point(107, 100);
             this.txtAge.Name = "txtAge";
             this.txtAge.Size = new System.Drawing.Size(47, 20);
-            this.txtAge.TabIndex = 15;
+            this.txtAge.TabIndex = 2;
+            this.txtAge.Text = "0";
+            this.txtAge.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtAge_KeyPress);
             // 
             // label14
             // 
@@ -350,7 +389,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(573, 77);
+            this.label12.Location = new System.Drawing.Point(573, 100);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(37, 13);
             this.label12.TabIndex = 13;
@@ -359,7 +398,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(536, 51);
+            this.label11.Location = new System.Drawing.Point(536, 47);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 13);
             this.label11.TabIndex = 12;
@@ -367,15 +406,17 @@
             // 
             // txtBloodPressure
             // 
-            this.txtBloodPressure.Location = new System.Drawing.Point(494, 74);
+            this.txtBloodPressure.Location = new System.Drawing.Point(494, 97);
             this.txtBloodPressure.Name = "txtBloodPressure";
             this.txtBloodPressure.Size = new System.Drawing.Size(73, 20);
-            this.txtBloodPressure.TabIndex = 11;
+            this.txtBloodPressure.TabIndex = 6;
+            this.txtBloodPressure.Text = "0";
+            this.txtBloodPressure.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBloodPressure_KeyPress);
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(403, 81);
+            this.label9.Location = new System.Drawing.Point(403, 104);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 10;
@@ -384,16 +425,17 @@
             // txtWeight
             // 
             this.txtWeight.BackColor = System.Drawing.Color.AliceBlue;
-            this.txtWeight.Location = new System.Drawing.Point(494, 48);
+            this.txtWeight.Location = new System.Drawing.Point(494, 44);
             this.txtWeight.Name = "txtWeight";
             this.txtWeight.Size = new System.Drawing.Size(36, 20);
-            this.txtWeight.TabIndex = 9;
+            this.txtWeight.TabIndex = 5;
+            this.txtWeight.Text = "0";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(403, 55);
+            this.label10.Location = new System.Drawing.Point(403, 51);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(55, 13);
             this.label10.TabIndex = 8;
@@ -404,7 +446,7 @@
             this.btnSearch.Location = new System.Drawing.Point(188, 20);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(72, 21);
-            this.btnSearch.TabIndex = 7;
+            this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search (F3)";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
@@ -415,7 +457,7 @@
             this.txtMobile.Location = new System.Drawing.Point(107, 73);
             this.txtMobile.Name = "txtMobile";
             this.txtMobile.Size = new System.Drawing.Size(153, 20);
-            this.txtMobile.TabIndex = 6;
+            this.txtMobile.TabIndex = 1;
             // 
             // label8
             // 
@@ -433,7 +475,7 @@
             this.txtPatientName.Location = new System.Drawing.Point(107, 47);
             this.txtPatientName.Name = "txtPatientName";
             this.txtPatientName.Size = new System.Drawing.Size(153, 20);
-            this.txtPatientName.TabIndex = 3;
+            this.txtPatientName.TabIndex = 0;
             // 
             // label7
             // 
@@ -463,6 +505,79 @@
             this.label6.TabIndex = 0;
             this.label6.Text = "Patient ID# :";
             // 
+            // gvPatientList
+            // 
+            this.gvPatientList.AllowUserToAddRows = false;
+            this.gvPatientList.AllowUserToDeleteRows = false;
+            this.gvPatientList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gvPatientList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.PatientId,
+            this.gvPatientName,
+            this.gvPatientAge,
+            this.gvPatientGender,
+            this.gvPatientCNIC,
+            this.gvPatientMobile,
+            this.gvPatientFatherName});
+            this.gvPatientList.Location = new System.Drawing.Point(381, 3);
+            this.gvPatientList.MultiSelect = false;
+            this.gvPatientList.Name = "gvPatientList";
+            this.gvPatientList.ReadOnly = true;
+            this.gvPatientList.RowHeadersVisible = false;
+            this.gvPatientList.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.gvPatientList.Size = new System.Drawing.Size(131, 55);
+            this.gvPatientList.TabIndex = 27;
+            this.gvPatientList.Visible = false;
+            this.gvPatientList.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvPatientList_RowEnter);
+            this.gvPatientList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gvPatientList_KeyDown);
+            // 
+            // PatientId
+            // 
+            this.PatientId.DataPropertyName = "id";
+            this.PatientId.HeaderText = "Id";
+            this.PatientId.Name = "PatientId";
+            this.PatientId.ReadOnly = true;
+            // 
+            // gvPatientName
+            // 
+            this.gvPatientName.DataPropertyName = "fullName";
+            this.gvPatientName.HeaderText = "Patient Name ";
+            this.gvPatientName.Name = "gvPatientName";
+            this.gvPatientName.ReadOnly = true;
+            // 
+            // gvPatientAge
+            // 
+            this.gvPatientAge.DataPropertyName = "age";
+            this.gvPatientAge.HeaderText = "DOB/Age";
+            this.gvPatientAge.Name = "gvPatientAge";
+            this.gvPatientAge.ReadOnly = true;
+            // 
+            // gvPatientGender
+            // 
+            this.gvPatientGender.DataPropertyName = "gender";
+            this.gvPatientGender.HeaderText = "Gender";
+            this.gvPatientGender.Name = "gvPatientGender";
+            this.gvPatientGender.ReadOnly = true;
+            // 
+            // gvPatientCNIC
+            // 
+            this.gvPatientCNIC.DataPropertyName = "CNIC";
+            this.gvPatientCNIC.HeaderText = "CNIC";
+            this.gvPatientCNIC.Name = "gvPatientCNIC";
+            this.gvPatientCNIC.ReadOnly = true;
+            // 
+            // gvPatientMobile
+            // 
+            this.gvPatientMobile.DataPropertyName = "mobileNumber";
+            this.gvPatientMobile.HeaderText = "Mobile";
+            this.gvPatientMobile.Name = "gvPatientMobile";
+            this.gvPatientMobile.ReadOnly = true;
+            // 
+            // gvPatientFatherName
+            // 
+            this.gvPatientFatherName.HeaderText = "Father Name";
+            this.gvPatientFatherName.Name = "gvPatientFatherName";
+            this.gvPatientFatherName.ReadOnly = true;
+            // 
             // label13
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -474,7 +589,7 @@
             this.label13.Name = "label13";
             this.label13.Padding = new System.Windows.Forms.Padding(10);
             this.label13.Size = new System.Drawing.Size(630, 40);
-            this.label13.TabIndex = 22;
+            this.label13.TabIndex = 0;
             this.label13.Text = "Patient Bill";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
@@ -484,7 +599,7 @@
             this.btnNewInvoice.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnNewInvoice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNewInvoice.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnNewInvoice.Location = new System.Drawing.Point(127, 19);
+            this.btnNewInvoice.Location = new System.Drawing.Point(64, 19);
             this.btnNewInvoice.Name = "btnNewInvoice";
             this.btnNewInvoice.Size = new System.Drawing.Size(85, 25);
             this.btnNewInvoice.TabIndex = 0;
@@ -498,7 +613,7 @@
             this.btnSaveInvoice.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnSaveInvoice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnSaveInvoice.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnSaveInvoice.Location = new System.Drawing.Point(218, 19);
+            this.btnSaveInvoice.Location = new System.Drawing.Point(161, 19);
             this.btnSaveInvoice.Name = "btnSaveInvoice";
             this.btnSaveInvoice.Size = new System.Drawing.Size(85, 25);
             this.btnSaveInvoice.TabIndex = 1;
@@ -512,7 +627,7 @@
             this.btnPrintInvoice.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnPrintInvoice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrintInvoice.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnPrintInvoice.Location = new System.Drawing.Point(309, 19);
+            this.btnPrintInvoice.Location = new System.Drawing.Point(355, 19);
             this.btnPrintInvoice.Name = "btnPrintInvoice";
             this.btnPrintInvoice.Size = new System.Drawing.Size(85, 25);
             this.btnPrintInvoice.TabIndex = 3;
@@ -526,106 +641,35 @@
             this.btnExit.BackColor = System.Drawing.Color.RoyalBlue;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnExit.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnExit.Location = new System.Drawing.Point(400, 19);
+            this.btnExit.Location = new System.Drawing.Point(452, 19);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(85, 25);
             this.btnExit.TabIndex = 5;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = false;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
             // groupBox3
             // 
             this.groupBox3.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.groupBox3.Controls.Add(this.btnUpdate);
             this.groupBox3.Controls.Add(this.btnExit);
             this.groupBox3.Controls.Add(this.btnPrintInvoice);
             this.groupBox3.Controls.Add(this.btnSaveInvoice);
             this.groupBox3.Controls.Add(this.btnNewInvoice);
-            this.groupBox3.Location = new System.Drawing.Point(16, 461);
+            this.groupBox3.Location = new System.Drawing.Point(16, 476);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(618, 56);
-            this.groupBox3.TabIndex = 25;
+            this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
-            // 
-            // gvPatientList
-            // 
-            this.gvPatientList.AllowUserToAddRows = false;
-            this.gvPatientList.AllowUserToDeleteRows = false;
-            this.gvPatientList.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.gvPatientList.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.PatientId,
-            this.gvPatientName,
-            this.gvPatientAge,
-            this.gvPatientGender,
-            this.gvPatientCNIC,
-            this.gvPatientMobile,
-            this.gvPatientFatherName,
-            this.gvPatientMotherName,
-            this.gvPatientHomeAddress,
-            this.gvPatientCheckupFee});
-            this.gvPatientList.Location = new System.Drawing.Point(266, 21);
-            this.gvPatientList.Name = "gvPatientList";
-            this.gvPatientList.ReadOnly = true;
-            this.gvPatientList.Size = new System.Drawing.Size(131, 55);
-            this.gvPatientList.TabIndex = 27;
-            this.gvPatientList.Visible = false;
-            // 
-            // PatientId
-            // 
-            this.PatientId.HeaderText = "Id";
-            this.PatientId.Name = "PatientId";
-            // 
-            // gvPatientName
-            // 
-            this.gvPatientName.HeaderText = "Patient Name ";
-            this.gvPatientName.Name = "gvPatientName";
-            // 
-            // gvPatientAge
-            // 
-            this.gvPatientAge.HeaderText = "DOB/Age";
-            this.gvPatientAge.Name = "gvPatientAge";
-            // 
-            // gvPatientGender
-            // 
-            this.gvPatientGender.HeaderText = "Gender";
-            this.gvPatientGender.Name = "gvPatientGender";
-            // 
-            // gvPatientCNIC
-            // 
-            this.gvPatientCNIC.HeaderText = "CNIC";
-            this.gvPatientCNIC.Name = "gvPatientCNIC";
-            // 
-            // gvPatientMobile
-            // 
-            this.gvPatientMobile.HeaderText = "Mobile";
-            this.gvPatientMobile.Name = "gvPatientMobile";
-            // 
-            // gvPatientFatherName
-            // 
-            this.gvPatientFatherName.HeaderText = "Father Name";
-            this.gvPatientFatherName.Name = "gvPatientFatherName";
-            // 
-            // gvPatientMotherName
-            // 
-            this.gvPatientMotherName.HeaderText = "Mother Name ";
-            this.gvPatientMotherName.Name = "gvPatientMotherName";
-            // 
-            // gvPatientHomeAddress
-            // 
-            this.gvPatientHomeAddress.HeaderText = "Home Address";
-            this.gvPatientHomeAddress.Name = "gvPatientHomeAddress";
-            // 
-            // gvPatientCheckupFee
-            // 
-            this.gvPatientCheckupFee.HeaderText = "Checkup Fee";
-            this.gvPatientCheckupFee.Name = "gvPatientCheckupFee";
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.txtRemarks);
-            this.groupBox4.Location = new System.Drawing.Point(16, 346);
+            this.groupBox4.Location = new System.Drawing.Point(16, 361);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(308, 115);
-            this.groupBox4.TabIndex = 24;
+            this.groupBox4.TabIndex = 3;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Remarks";
             // 
@@ -705,11 +749,14 @@
             // 
             this.txtPaidAmmount.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPaidAmmount.Location = new System.Drawing.Point(111, 157);
+            this.txtPaidAmmount.MaxLength = 7;
             this.txtPaidAmmount.Name = "txtPaidAmmount";
             this.txtPaidAmmount.Size = new System.Drawing.Size(128, 26);
-            this.txtPaidAmmount.TabIndex = 15;
+            this.txtPaidAmmount.TabIndex = 2;
             this.txtPaidAmmount.Text = "0";
             this.txtPaidAmmount.TextChanged += new System.EventHandler(this.txtPaidAmmount_TextChanged);
+            this.txtPaidAmmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPaidAmmount_KeyDown);
+            this.txtPaidAmmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPaidAmmount_KeyPress);
             // 
             // txtDiscount
             // 
@@ -717,7 +764,7 @@
             this.txtDiscount.Location = new System.Drawing.Point(111, 73);
             this.txtDiscount.Name = "txtDiscount";
             this.txtDiscount.Size = new System.Drawing.Size(60, 26);
-            this.txtDiscount.TabIndex = 42;
+            this.txtDiscount.TabIndex = 0;
             this.txtDiscount.Text = "0";
             this.txtDiscount.TextChanged += new System.EventHandler(this.txtDiscount_TextChanged);
             this.txtDiscount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiscount_KeyPress);
@@ -728,7 +775,7 @@
             this.txtDiscountInPercentage.Location = new System.Drawing.Point(248, 73);
             this.txtDiscountInPercentage.Name = "txtDiscountInPercentage";
             this.txtDiscountInPercentage.Size = new System.Drawing.Size(50, 26);
-            this.txtDiscountInPercentage.TabIndex = 43;
+            this.txtDiscountInPercentage.TabIndex = 1;
             this.txtDiscountInPercentage.Text = "0";
             this.txtDiscountInPercentage.TextChanged += new System.EventHandler(this.txtDiscountInPercentage_TextChanged);
             this.txtDiscountInPercentage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiscountInPercentage_KeyPress);
@@ -773,10 +820,10 @@
             this.groupBox5.Controls.Add(this.label24);
             this.groupBox5.Controls.Add(this.txtPaidAmmount);
             this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(330, 213);
+            this.groupBox5.Location = new System.Drawing.Point(330, 228);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(312, 248);
-            this.groupBox5.TabIndex = 25;
+            this.groupBox5.TabIndex = 4;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "B I L L";
             // 
@@ -825,13 +872,46 @@
             this.lblBillAmmount.TabIndex = 47;
             this.lblBillAmmount.Text = "0";
             // 
+            // btnUpdate
+            // 
+            this.btnUpdate.AutoSize = true;
+            this.btnUpdate.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnUpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnUpdate.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnUpdate.Location = new System.Drawing.Point(258, 19);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(85, 25);
+            this.btnUpdate.TabIndex = 6;
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.UseVisualStyleBackColor = false;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // cmbBloodGroup
+            // 
+            this.cmbBloodGroup.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBloodGroup.FormattingEnabled = true;
+            this.cmbBloodGroup.Items.AddRange(new object[] {
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+            "O+",
+            "O-"});
+            this.cmbBloodGroup.Location = new System.Drawing.Point(494, 71);
+            this.cmbBloodGroup.Name = "cmbBloodGroup";
+            this.cmbBloodGroup.Size = new System.Drawing.Size(73, 21);
+            this.cmbBloodGroup.TabIndex = 38;
+            // 
             // InvoiceForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(654, 529);
+            this.ClientSize = new System.Drawing.Size(654, 544);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox4);
+            this.Controls.Add(this.gvPatientList);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbPatientDetail);
@@ -846,9 +926,9 @@
             this.gbPatientDetail.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gvPatientList)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gvPatientList)).EndInit();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -876,16 +956,6 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.DataGridView gvPatientList;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PatientId;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientAge;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientGender;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientCNIC;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientMobile;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientFatherName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientMotherName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientHomeAddress;
-        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientCheckupFee;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.TextBox txtRemarks;
         private System.Windows.Forms.TextBox txtMobile;
@@ -930,5 +1000,17 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label lblToken;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PatientId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientAge;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientGender;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientCNIC;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientMobile;
+        private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientFatherName;
+        private System.Windows.Forms.TextBox txtHight;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.ComboBox cmbBloodGroup;
     }
 }

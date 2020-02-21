@@ -13,7 +13,6 @@ namespace ShifaClinic.DataContext
         public Bill()
         {
             BillDetails = new HashSet<BillDetail>();
-            Tokens = new HashSet<Token>();
         }
 
         public int id { get; set; }
@@ -37,6 +36,7 @@ namespace ShifaClinic.DataContext
         public int? modifiedBy { get; set; }
 
         public DateTime? modifyDate { get; set; }
+        public int? tokenNumber { get; set; }
 
         [StringLength(1000)]
         public string remarks { get; set; }
@@ -49,8 +49,5 @@ namespace ShifaClinic.DataContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Token> Tokens { get; set; }
     }
 }

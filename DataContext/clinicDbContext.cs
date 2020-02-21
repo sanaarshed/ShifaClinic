@@ -38,6 +38,11 @@ namespace ShifaClinic.DataContext
                 .WithOptional(e => e.DoctorDepartment)
                 .HasForeignKey(e => e.departmentId);
 
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.Tokens)
+                .WithOptional(e => e.Doctor)
+                .HasForeignKey(e => e.docId);
+
             modelBuilder.Entity<Employee>()
                 .Property(e => e.presentAddress)
                 .IsUnicode(false);
@@ -58,10 +63,6 @@ namespace ShifaClinic.DataContext
             modelBuilder.Entity<log>()
                 .Property(e => e.previousValue)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<Patient>()
-                .Property(e => e.mobileName)
-                .IsFixedLength();
 
             modelBuilder.Entity<Patient>()
                 .HasMany(e => e.Bills)

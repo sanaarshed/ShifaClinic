@@ -17,6 +17,8 @@ namespace ShifaClinic.DataContext
 
         public DateTime? tokenDate { get; set; }
 
-        public virtual Bill Bill { get; set; }
+        public int? docId { get; set; }
+
+        public virtual Doctor Doctor { get; set; }
     }
 }

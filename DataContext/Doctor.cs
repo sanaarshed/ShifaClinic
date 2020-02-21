@@ -12,6 +12,7 @@ namespace ShifaClinic.DataContext
         public Doctor()
         {
             BillDetails = new HashSet<BillDetail>();
+            Tokens = new HashSet<Token>();
         }
 
         public int id { get; set; }
@@ -52,5 +53,8 @@ namespace ShifaClinic.DataContext
         public virtual ICollection<BillDetail> BillDetails { get; set; }
 
         public virtual DoctorDepartment DoctorDepartment { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Token> Tokens { get; set; }
     }
 }
