@@ -1,4 +1,4 @@
-namespace ShifaClinic.DataContext
+namespace ShifaClinic.DataContext.temp
 {
     using System;
     using System.Collections.Generic;
@@ -8,13 +8,6 @@ namespace ShifaClinic.DataContext
 
     public partial class Doctor
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Doctor()
-        {
-            BillDetails = new HashSet<BillDetail>();
-            Tokens = new HashSet<Token>();
-        }
-
         public int id { get; set; }
 
         public int? departmentId { get; set; }
@@ -47,6 +40,7 @@ namespace ShifaClinic.DataContext
 
         [StringLength(50)]
         public string CNIC { get; set; }
+
         public int createdBy { get; set; }
 
         public DateTime createdDate { get; set; }
@@ -54,13 +48,5 @@ namespace ShifaClinic.DataContext
         public int? midifiedBy { get; set; }
 
         public DateTime? modifiedDate { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BillDetail> BillDetails { get; set; }
-
-        public virtual DoctorDepartment DoctorDepartment { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Token> Tokens { get; set; }
     }
 }

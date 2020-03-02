@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ShifaClinic.Common
 {
@@ -16,6 +17,27 @@ namespace ShifaClinic.Common
             var b = (dateOfBirth.Year * 100 + dateOfBirth.Month) * 100 + dateOfBirth.Day;
 
             return (a - b) / 10000;
+        }
+
+        public static void onlyAllowNumericValue(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) &&
+                    !char.IsDigit(e.KeyChar) &&
+                    (e.KeyChar != '.'))
+            {
+                e.Handled = true;
+            }
+
+            // only allow one decimal point
+            if ((e.KeyChar == '.') && ((sender as TextBox).Text.IndexOf('.') > -1))
+            {
+                e.Handled = true;
+            }
+
+            if (string.IsNullOrEmpty((sender as TextBox).Text))
+            {
+                (sender as TextBox).Text = "0";
+            }
         }
 
     }

@@ -55,7 +55,7 @@ namespace ShifaClinic
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Patient.InvoiceForm());
+            Application.Run(new Patient.frmPatientInvoiceForm());
         }
     }
 }

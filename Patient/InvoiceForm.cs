@@ -170,10 +170,10 @@ namespace ShifaClinic.Patient
         }
         private void bindPatientList(clinicDbContext db)
         {
-            var _source = db.Patients.ToList();
+            var _patientData = db.Patients.ToList();
 
             List<POCO.Patient> _patients = new List<POCO.Patient>();
-            foreach (var i in _source)
+            foreach (var i in _patientData)
             {
                 var _p = new POCO.Patient();
                 _p.id = i.id;
@@ -185,6 +185,7 @@ namespace ShifaClinic.Patient
                 //_p.bloodGroup = i.bloodGroup;
 
                 _patients.Add(_p);
+                
             }
 
             gvPatientList.AutoGenerateColumns = false;
@@ -216,10 +217,7 @@ namespace ShifaClinic.Patient
             this.toggleUserList();
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
+      
 
         private void btnSaveInvoice_Click(object sender, EventArgs e)
         {
@@ -228,7 +226,7 @@ namespace ShifaClinic.Patient
                    MessageBoxButtons.YesNo,
                    MessageBoxIcon.Question) == DialogResult.Yes)
                 insertRecord();
-
+            // there should be an option to return back to the filled form ..else goBacktoForm(); or previous state
             resetform();
 
         }
@@ -267,6 +265,10 @@ namespace ShifaClinic.Patient
 
                 db.Bills.Add(_bill);
                 db.SaveChanges();
+                MessageBox.Show("Record Added successfully...",
+                    "SUCCESS",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
             }
         }
@@ -389,11 +391,7 @@ namespace ShifaClinic.Patient
             this.onlyAllowNumericValue(sender, e);
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
+        
         private void txtBloodPressure_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.onlyAllowNumericValue(sender, e);
@@ -427,9 +425,7 @@ namespace ShifaClinic.Patient
             }
         }
 
-        private void gvPatientList_KeyPress(object sender, KeyPressEventArgs e)
-        {
-        }
+       
 
         private void gvPatientList_KeyDown(object sender, KeyEventArgs e)
         {

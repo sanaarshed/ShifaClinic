@@ -64,13 +64,13 @@
             this.txtSearchStaff = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.dgvPatientList = new System.Windows.Forms.DataGridView();
-            this.txtSearchByName = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fullName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.email = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.mobileNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gender = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.txtSearchByName = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             txtMobileNumber = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,6 +78,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.formError)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvPatientList)).BeginInit();
             this.SuspendLayout();
+            // 
+            // txtMobileNumber
+            // 
+            txtMobileNumber.BackColor = System.Drawing.Color.AliceBlue;
+            txtMobileNumber.Location = new System.Drawing.Point(104, 152);
+            txtMobileNumber.Name = "txtMobileNumber";
+            txtMobileNumber.Size = new System.Drawing.Size(137, 20);
+            txtMobileNumber.TabIndex = 11;
+            txtMobileNumber.Leave += new System.EventHandler(this.txtMobileNumber_Leave);
             // 
             // groupBox1
             // 
@@ -122,15 +131,6 @@
             this.rbMale.TabStop = true;
             this.rbMale.Text = "Male";
             this.rbMale.UseVisualStyleBackColor = true;
-            // 
-            // txtMobileNumber
-            // 
-            txtMobileNumber.BackColor = System.Drawing.Color.AliceBlue;
-            txtMobileNumber.Location = new System.Drawing.Point(104, 152);
-            txtMobileNumber.Name = "txtMobileNumber";
-            txtMobileNumber.Size = new System.Drawing.Size(137, 20);
-            txtMobileNumber.TabIndex = 11;
-            txtMobileNumber.Leave += new System.EventHandler(this.txtMobileNumber_Leave);
             // 
             // label10
             // 
@@ -453,23 +453,6 @@
             this.dgvPatientList.TabIndex = 35;
             this.dgvPatientList.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvPatientList_RowEnter);
             // 
-            // txtSearchByName
-            // 
-            this.txtSearchByName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSearchByName.Location = new System.Drawing.Point(569, 94);
-            this.txtSearchByName.Name = "txtSearchByName";
-            this.txtSearchByName.Size = new System.Drawing.Size(393, 20);
-            this.txtSearchByName.TabIndex = 39;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(428, 101);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(123, 13);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Search By Patient Name";
-            // 
             // id
             // 
             this.id.DataPropertyName = "id";
@@ -504,6 +487,23 @@
             this.gender.HeaderText = "Gender";
             this.gender.Name = "gender";
             this.gender.ReadOnly = true;
+            // 
+            // txtSearchByName
+            // 
+            this.txtSearchByName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtSearchByName.Location = new System.Drawing.Point(569, 94);
+            this.txtSearchByName.Name = "txtSearchByName";
+            this.txtSearchByName.Size = new System.Drawing.Size(393, 20);
+            this.txtSearchByName.TabIndex = 39;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(428, 101);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(123, 13);
+            this.label14.TabIndex = 38;
+            this.label14.Text = "Search By Patient Name";
             // 
             // frmEntryForm
             // 

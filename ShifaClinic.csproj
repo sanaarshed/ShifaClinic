@@ -181,9 +181,24 @@
     <Compile Include="DataContext\Role.cs" />
     <Compile Include="DataContext\Salary.cs" />
     <Compile Include="DataContext\Service.cs" />
+    <Compile Include="DataContext\temp\Doctor.cs" />
+    <Compile Include="DataContext\temp\temp.cs" />
     <Compile Include="DataContext\Token.cs" />
     <Compile Include="DataContext\User.cs" />
+    <Compile Include="Patient\frmPatientInvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Patient\frmPatientInvoiceForm.Designer.cs">
+      <DependentUpon>frmPatientInvoiceForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Patient\invoiceBackupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Patient\invoiceBackupForm.Designer.cs">
+      <DependentUpon>invoiceBackupForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="POCO\Doctor.cs" />
+    <Compile Include="POCO\DoctorOrServices.cs" />
     <Compile Include="POCO\Patient.cs" />
     <Compile Include="POCO\PatientInvoice .cs" />
     <Compile Include="POCO\User.cs" />
@@ -288,8 +303,14 @@
     <EmbeddedResource Include="Patient\frmBillForm.resx">
       <DependentUpon>frmBillForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Patient\frmPatientInvoiceForm.resx">
+      <DependentUpon>frmPatientInvoiceForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Patient\invoicebackupdesign.resx">
       <DependentUpon>invoicebackupdesign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Patient\invoiceBackupForm.resx">
+      <DependentUpon>invoiceBackupForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Patient\InvoiceForm.resx">
       <DependentUpon>InvoiceForm.cs</DependentUpon>

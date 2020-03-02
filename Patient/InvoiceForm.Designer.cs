@@ -158,7 +158,6 @@
             this.label2.Size = new System.Drawing.Size(20, 13);
             this.label2.TabIndex = 17;
             this.label2.Text = "Rs";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // cmbDoctor
             // 
