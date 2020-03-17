@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label13 = new System.Windows.Forms.Label();
             this.gbPatientDetail = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -70,8 +73,6 @@
             this.cmbDoctor = new System.Windows.Forms.ComboBox();
             this.cmbDoctorDepartment = new System.Windows.Forms.ComboBox();
             this.cmbServices = new System.Windows.Forms.ComboBox();
-            this.lblBillId = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
             this.lblGross = new System.Windows.Forms.Label();
             this.lblBanalce = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
@@ -110,6 +111,7 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.txtRemarks = new System.Windows.Forms.TextBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.formError = new System.Windows.Forms.ErrorProvider(this.components);
             this.gbPatientDetail.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -119,6 +121,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gvPatientList)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.formError)).BeginInit();
             this.SuspendLayout();
             // 
             // label13
@@ -197,7 +200,7 @@
             this.cmbBloodGroup.Location = new System.Drawing.Point(495, 38);
             this.cmbBloodGroup.Name = "cmbBloodGroup";
             this.cmbBloodGroup.Size = new System.Drawing.Size(73, 21);
-            this.cmbBloodGroup.TabIndex = 6;
+            this.cmbBloodGroup.TabIndex = 5;
             // 
             // txtMobile
             // 
@@ -206,14 +209,16 @@
             this.txtMobile.Name = "txtMobile";
             this.txtMobile.Size = new System.Drawing.Size(153, 20);
             this.txtMobile.TabIndex = 1;
+            this.txtMobile.Click += new System.EventHandler(this.txtMobile_Click);
             // 
             // txtHight
             // 
             this.txtHight.Location = new System.Drawing.Point(659, 39);
             this.txtHight.Name = "txtHight";
             this.txtHight.Size = new System.Drawing.Size(49, 20);
-            this.txtHight.TabIndex = 8;
+            this.txtHight.TabIndex = 9;
             this.txtHight.Text = "0";
+            this.txtHight.Click += new System.EventHandler(this.txtHight_Click);
             // 
             // label6
             // 
@@ -239,7 +244,7 @@
             this.txtPatientId.Name = "txtPatientId";
             this.txtPatientId.ReadOnly = true;
             this.txtPatientId.Size = new System.Drawing.Size(75, 20);
-            this.txtPatientId.TabIndex = 17;
+            this.txtPatientId.TabIndex = 12;
             this.txtPatientId.Text = "0";
             // 
             // label26
@@ -268,7 +273,7 @@
             this.panel1.Location = new System.Drawing.Point(657, 13);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(136, 23);
-            this.panel1.TabIndex = 3;
+            this.panel1.TabIndex = 8;
             // 
             // rbMale
             // 
@@ -299,13 +304,15 @@
             this.txtPatientName.Name = "txtPatientName";
             this.txtPatientName.Size = new System.Drawing.Size(153, 20);
             this.txtPatientName.TabIndex = 0;
+            this.txtPatientName.Click += new System.EventHandler(this.txtPatientName_Click);
+            this.txtPatientName.Leave += new System.EventHandler(this.txtPatientName_Leave);
             // 
             // dtpDOB
             // 
             this.dtpDOB.Location = new System.Drawing.Point(401, 63);
             this.dtpDOB.Name = "dtpDOB";
             this.dtpDOB.Size = new System.Drawing.Size(167, 20);
-            this.dtpDOB.TabIndex = 4;
+            this.dtpDOB.TabIndex = 7;
             this.dtpDOB.ValueChanged += new System.EventHandler(this.dtpDOB_ValueChanged);
             // 
             // label8
@@ -343,7 +350,7 @@
             this.rbStaff.Location = new System.Drawing.Point(496, 15);
             this.rbStaff.Name = "rbStaff";
             this.rbStaff.Size = new System.Drawing.Size(47, 17);
-            this.rbStaff.TabIndex = 59;
+            this.rbStaff.TabIndex = 3;
             this.rbStaff.Text = "Staff";
             this.rbStaff.UseVisualStyleBackColor = true;
             // 
@@ -364,7 +371,7 @@
             this.rbPrivate.Location = new System.Drawing.Point(432, 15);
             this.rbPrivate.Name = "rbPrivate";
             this.rbPrivate.Size = new System.Drawing.Size(58, 17);
-            this.rbPrivate.TabIndex = 4;
+            this.rbPrivate.TabIndex = 2;
             this.rbPrivate.TabStop = true;
             this.rbPrivate.Text = "Private";
             this.rbPrivate.UseVisualStyleBackColor = true;
@@ -375,8 +382,9 @@
             this.txtWeight.Location = new System.Drawing.Point(339, 39);
             this.txtWeight.Name = "txtWeight";
             this.txtWeight.Size = new System.Drawing.Size(36, 20);
-            this.txtWeight.TabIndex = 5;
+            this.txtWeight.TabIndex = 4;
             this.txtWeight.Text = "0";
+            this.txtWeight.Click += new System.EventHandler(this.txtWeight_Click);
             // 
             // label16
             // 
@@ -410,16 +418,18 @@
             this.txtBloodPressure.Location = new System.Drawing.Point(659, 63);
             this.txtBloodPressure.Name = "txtBloodPressure";
             this.txtBloodPressure.Size = new System.Drawing.Size(73, 20);
-            this.txtBloodPressure.TabIndex = 7;
+            this.txtBloodPressure.TabIndex = 10;
             this.txtBloodPressure.Text = "0";
+            this.txtBloodPressure.Click += new System.EventHandler(this.txtBloodPressure_Click);
             // 
             // txtAge
             // 
             this.txtAge.Location = new System.Drawing.Point(337, 63);
             this.txtAge.Name = "txtAge";
             this.txtAge.Size = new System.Drawing.Size(47, 20);
-            this.txtAge.TabIndex = 2;
+            this.txtAge.TabIndex = 6;
             this.txtAge.Text = "0";
+            this.txtAge.Click += new System.EventHandler(this.txtAge_Click);
             // 
             // label11
             // 
@@ -504,7 +514,7 @@
             this.btnAdd.Location = new System.Drawing.Point(869, 14);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(62, 29);
-            this.btnAdd.TabIndex = 6;
+            this.btnAdd.TabIndex = 3;
             this.btnAdd.Text = "+ Add";
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
@@ -558,26 +568,6 @@
             this.cmbServices.Size = new System.Drawing.Size(127, 21);
             this.cmbServices.TabIndex = 0;
             this.cmbServices.SelectedIndexChanged += new System.EventHandler(this.cmbServices_SelectedIndexChanged);
-            // 
-            // lblBillId
-            // 
-            this.lblBillId.AutoSize = true;
-            this.lblBillId.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblBillId.Location = new System.Drawing.Point(738, 545);
-            this.lblBillId.Name = "lblBillId";
-            this.lblBillId.Size = new System.Drawing.Size(27, 20);
-            this.lblBillId.TabIndex = 67;
-            this.lblBillId.Text = "00";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(740, 525);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(54, 20);
-            this.label18.TabIndex = 66;
-            this.label18.Text = "Bill ID:";
             // 
             // lblGross
             // 
@@ -692,7 +682,7 @@
             this.txtDiscount.Location = new System.Drawing.Point(150, 95);
             this.txtDiscount.Name = "txtDiscount";
             this.txtDiscount.Size = new System.Drawing.Size(37, 26);
-            this.txtDiscount.TabIndex = 1;
+            this.txtDiscount.TabIndex = 0;
             this.txtDiscount.Text = "0";
             this.txtDiscount.Click += new System.EventHandler(this.txtDiscount_Click);
             this.txtDiscount.TextChanged += new System.EventHandler(this.txtDiscount_TextChanged);
@@ -713,8 +703,9 @@
             this.txtDiscountInPercentage.Location = new System.Drawing.Point(256, 95);
             this.txtDiscountInPercentage.Name = "txtDiscountInPercentage";
             this.txtDiscountInPercentage.Size = new System.Drawing.Size(49, 26);
-            this.txtDiscountInPercentage.TabIndex = 0;
+            this.txtDiscountInPercentage.TabIndex = 1;
             this.txtDiscountInPercentage.Text = "0";
+            this.txtDiscountInPercentage.Click += new System.EventHandler(this.txtDiscountInPercentage_Click);
             this.txtDiscountInPercentage.TextChanged += new System.EventHandler(this.txtDiscountInPercentage_TextChanged);
             this.txtDiscountInPercentage.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtDiscount_KeyPress);
             // 
@@ -737,12 +728,17 @@
             this.txtPaidAmmount.Size = new System.Drawing.Size(128, 26);
             this.txtPaidAmmount.TabIndex = 2;
             this.txtPaidAmmount.Text = "0";
+            this.txtPaidAmmount.Click += new System.EventHandler(this.txtPaidAmmount_Click);
             this.txtPaidAmmount.TextChanged += new System.EventHandler(this.txtPaidAmmount_TextChanged);
             this.txtPaidAmmount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPaidAmmount_KeyDown);
             // 
             // dgvVisit
             // 
             this.dgvVisit.AllowUserToAddRows = false;
+            this.dgvVisit.AllowUserToResizeRows = false;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Azure;
+            this.dgvVisit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dgvVisit.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
             this.dgvVisit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvVisit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -750,14 +746,34 @@
             this.title,
             this.fees,
             this.btnDelete});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.Padding = new System.Windows.Forms.Padding(2);
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvVisit.DefaultCellStyle = dataGridViewCellStyle6;
             this.dgvVisit.Location = new System.Drawing.Point(12, 214);
+            this.dgvVisit.MultiSelect = false;
             this.dgvVisit.Name = "dgvVisit";
             this.dgvVisit.ReadOnly = true;
+            this.dgvVisit.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            this.dgvVisit.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvVisit.ShowCellErrors = false;
+            this.dgvVisit.ShowCellToolTips = false;
+            this.dgvVisit.ShowEditingIcon = false;
+            this.dgvVisit.ShowRowErrors = false;
             this.dgvVisit.Size = new System.Drawing.Size(595, 192);
-            this.dgvVisit.TabIndex = 5;
+            this.dgvVisit.StandardTab = true;
+            this.dgvVisit.TabIndex = 3;
             this.dgvVisit.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisit_CellContentClick);
             this.dgvVisit.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvVisit_RowEnter);
             this.dgvVisit.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.dgvVisit_RowsAdded);
+            this.dgvVisit.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.dgvVisit_RowsRemoved);
+            this.dgvVisit.UserDeletedRow += new System.Windows.Forms.DataGridViewRowEventHandler(this.dgvVisit_UserDeletedRow);
+            this.dgvVisit.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgvVisit_UserDeletingRow);
             // 
             // id
             // 
@@ -794,10 +810,10 @@
             // btnDelete
             // 
             this.btnDelete.DataPropertyName = "control";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.RoyalBlue;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Gray;
-            this.btnDelete.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.RoyalBlue;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Gray;
+            this.btnDelete.DefaultCellStyle = dataGridViewCellStyle5;
             this.btnDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnDelete.HeaderText = "";
             this.btnDelete.Name = "btnDelete";
@@ -819,8 +835,8 @@
             this.groupBox5.Controls.Add(this.btnNew);
             this.groupBox5.Location = new System.Drawing.Point(12, 515);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(717, 67);
-            this.groupBox5.TabIndex = 4;
+            this.groupBox5.Size = new System.Drawing.Size(942, 67);
+            this.groupBox5.TabIndex = 6;
             this.groupBox5.TabStop = false;
             // 
             // btnClose
@@ -849,6 +865,7 @@
             this.btnPrintDetails.TabIndex = 3;
             this.btnPrintDetails.Text = "Print Detail";
             this.btnPrintDetails.UseVisualStyleBackColor = false;
+            this.btnPrintDetails.Click += new System.EventHandler(this.btnPrintDetails_Click);
             // 
             // btnUpdate
             // 
@@ -890,6 +907,7 @@
             this.btnNew.TabIndex = 1;
             this.btnNew.Text = "New";
             this.btnNew.UseVisualStyleBackColor = false;
+            this.btnNew.Click += new System.EventHandler(this.btnNew_Click);
             // 
             // gvPatientList
             // 
@@ -915,6 +933,7 @@
             this.gvPatientList.Visible = false;
             this.gvPatientList.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.gvPatientList_RowEnter);
             this.gvPatientList.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gvPatientList_KeyDown);
+            this.gvPatientList.Leave += new System.EventHandler(this.gvPatientList_Leave);
             // 
             // PatientId
             // 
@@ -970,7 +989,7 @@
             this.groupBox1.Location = new System.Drawing.Point(13, 412);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(594, 101);
-            this.groupBox1.TabIndex = 66;
+            this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Remarks";
             // 
@@ -1003,9 +1022,13 @@
             this.groupBox4.Location = new System.Drawing.Point(613, 214);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(341, 299);
-            this.groupBox4.TabIndex = 67;
+            this.groupBox4.TabIndex = 5;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Bill";
+            // 
+            // formError
+            // 
+            this.formError.ContainerControl = this;
             // 
             // frmPatientInvoiceForm
             // 
@@ -1014,9 +1037,7 @@
             this.ClientSize = new System.Drawing.Size(963, 593);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lblBillId);
             this.Controls.Add(this.gvPatientList);
-            this.Controls.Add(this.label18);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.dgvVisit);
@@ -1026,6 +1047,7 @@
             this.Name = "frmPatientInvoiceForm";
             this.Text = "frmPatientInvoiceForm";
             this.Load += new System.EventHandler(this.frmPatientInvoiceForm_Load);
+            this.Click += new System.EventHandler(this.frmPatientInvoiceForm_Click);
             this.gbPatientDetail.ResumeLayout(false);
             this.gbPatientDetail.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -1042,8 +1064,8 @@
             this.groupBox1.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.formError)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -1121,8 +1143,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn gvPatientFatherName;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.TextBox txtRemarks;
-        private System.Windows.Forms.Label lblBillId;
-        private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn type;
@@ -1130,5 +1150,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn fees;
         private System.Windows.Forms.DataGridViewButtonColumn btnDelete;
         private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ErrorProvider formError;
     }
 }

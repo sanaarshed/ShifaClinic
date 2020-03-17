@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using ShifaClinic.DataContext;
-using System.Threading.Tasks;
 using ShifaClinic.Common;
 using System.Windows.Forms;
 using ShifaClinic.Session;
-using System.Windows.Forms.VisualStyles;
+using System.IO;
+using ShifaClinic.Patient.reports;
+using Microsoft.Reporting.WinForms;
+using System.Drawing.Printing;
 
 namespace ShifaClinic.Patient
 {
     public partial class frmPatientInvoiceForm : Form
     {
-
-
         private Auth auth = new Auth();
         clinicDbContext db = new clinicDbContext();
         public frmPatientInvoiceForm()
@@ -41,7 +39,7 @@ namespace ShifaClinic.Patient
         {
             var ctrl = sender as TextBox;
             ctrl.BackColor = Color.Beige;
-            //ctrl.SelectAll();
+            ctrl.SelectAll();
         }
         private void Ctrl_LostFocus(object sender, EventArgs e)
         {
@@ -65,7 +63,7 @@ namespace ShifaClinic.Patient
                 }
             }
         }
-        private void resetform(int billId)
+        private void resetform()
         {
             txtPatientName.Text = string.Empty;
             txtPatientId.Text = string.Empty;
@@ -85,8 +83,9 @@ namespace ShifaClinic.Patient
             lblGross.Text = "0";
             lblToken.Text = "0";
             txtHight.Text = "0";
+            this.dgvVisit.Rows.Clear();
+            this.dgvVisit.Refresh();
             var billid = new Bill();
-            lblBillId.Text += billId;
 
         }
 
@@ -181,7 +180,7 @@ namespace ShifaClinic.Patient
                     cmbServices.Items.RemoveAt(1);
                 }
             }
-            else if (cmbServices.SelectedIndex > 1)
+            else if (cmbServices.SelectedIndex > 0)
             {
                 _temp = new POCO.BillDetail();
                 var item = cmbServices.SelectedItem as ComboBoxItem;
@@ -265,7 +264,7 @@ namespace ShifaClinic.Patient
                 _discount = int.Parse(txtDiscount.Text);
             }
             int _i = int.Parse(lblGross.Text.ToString());
-            int _billAmount =  _i - _discount;
+            int _billAmount = _i - _discount;
             lblBillAmmount.Text = _billAmount.ToString();
 
             if (!string.IsNullOrEmpty(txtPaidAmmount.Text))
@@ -295,57 +294,140 @@ namespace ShifaClinic.Patient
                 (sender as TextBox).Text = "0";
             }
         }
+        private void validateform()
+        {
+            //bool _result = false;
+            formError.Clear();
+            if (string.IsNullOrEmpty(txtPatientName.Text))
+            {
+                this.formError.SetError(txtPatientName, "this field is required");
+            }
+            else
+            {
+                this.formError.SetError(txtPatientName, "");
+            }
+            //return _result;
+        }
         private void insertRecord()
         {
-            var _patientRecord = new DataContext.Patient();
-            _patientRecord.fullName = txtPatientName.Text.Trim();
-            _patientRecord.mobileName = txtMobile.Text.Trim();
-            _patientRecord.age = int.Parse(txtAge.Text.Trim());
-            _patientRecord.patientType = rbPrivate.Checked ? "Private" : "Staff";
-            _patientRecord.weight = int.Parse(txtWeight.Text.Trim());
-            _patientRecord.bloodPressure = int.Parse(txtBloodPressure.Text.Trim());
-            _patientRecord.gender = !rbMale.Checked;
-            _patientRecord.createdBy = 1;
-            _patientRecord.createdBy = 1;
-            _patientRecord.createDate = DateTime.Now;
-            _patientRecord.doctorId = int.Parse(cmbDoctor.SelectedValue.ToString());
-            _patientRecord.bloodGroup = cmbBloodGroup.Text.Trim();
-            _patientRecord.hight = int.Parse(txtHight.Text.Trim());
+            validateform();
 
 
-            db.Patients.Add(_patientRecord);
-            db.SaveChanges();
+            if (txtPatientId.Text == "0")
+            {
+                var _patientRecord = new DataContext.Patient();
+                _patientRecord.fullName = txtPatientName.Text.Trim();
+                _patientRecord.mobileName = txtMobile.Text.Trim();
+                _patientRecord.age = int.Parse(txtAge.Text.Trim());
+                _patientRecord.patientType = rbPrivate.Checked ? "Private" : "Staff";
+                _patientRecord.weight = int.Parse(txtWeight.Text.Trim());
+                _patientRecord.bloodPressure = int.Parse(txtBloodPressure.Text.Trim());
+                _patientRecord.gender = !rbMale.Checked;
+                _patientRecord.createdBy = 1;
+                _patientRecord.createDate = DateTime.Now;
+                _patientRecord.bloodGroup = this.cmbBloodGroup.Text.Trim();
+                _patientRecord.hight = int.Parse(txtHight.Text.Trim());
 
-            var _bill = new Bill();
-            _bill.gross = int.Parse(lblGross.Text);
-            _bill.billAmount = int.Parse(lblBillAmmount.Text);
-            _bill.balance = int.Parse(lblBanalce.Text);
-            _bill.patientId = _patientRecord.id;
-            _bill.createdBy = auth.currentUser;
-            _bill.createDate = DateTime.Now;
-            _bill.tokenNumber = int.Parse(lblToken.Text);
-            _bill.remarks = txtRemarks.Text;
+                db.Patients.Add(_patientRecord);
+                db.SaveChanges();
+                var _bill = new Bill();
+                _bill.gross = int.Parse(lblGross.Text);
+                _bill.billAmount = int.Parse(lblBillAmmount.Text);
+                _bill.balance = int.Parse(lblBanalce.Text);
+                _bill.patientId = _patientRecord.id;
+                _bill.createdBy = auth.currentUser;
+                _bill.createDate = DateTime.Now;
+                _bill.tokenNumber = int.Parse(lblToken.Text);
+                _bill.remarks = txtRemarks.Text;
 
-            db.Bills.Add(_bill);
-            db.SaveChanges();
+                db.Bills.Add(_bill);
+                db.SaveChanges();
 
-            var _billDetails = new BillDetail();
-            _billDetails.doctorId = int.Parse(cmbDoctor.SelectedValue.ToString());
-            _billDetails.billId = _bill.id;
-            //_billDetails.patientId = txtPatientId.Text;
-            _billDetails.serviceId = int.Parse(cmbServices.SelectedValue.ToString());
+                int _docId, _serviceId;
+                _docId = _serviceId = 0;
+                foreach (DataGridViewRow row in dgvVisit.Rows)
+                {
+                    var _billDetails = new BillDetail();
+                    if (bool.Parse(row.Cells[1].Value.ToString()))
+                    {
+                        _docId = int.Parse(row.Cells[0].Value.ToString());
+                        _billDetails.doctorId = _docId;
+                    }
+                    else if (!bool.Parse(row.Cells[1].Value.ToString()))
+                    {
+                        _serviceId = int.Parse(row.Cells[0].Value.ToString());
+                        _billDetails.serviceId = _serviceId;
+                    }
 
-            db.SaveChanges();
-            MessageBox.Show("Record Added successfully...",
-                "SUCCESS",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+                    _billDetails.billId = _bill.id;
+                    db.BillDetails.Add(_billDetails);
 
-            resetform(_bill.id);
+                    db.SaveChanges();
+                }
+
+                MessageBox.Show("Record Added successfully...",
+                               "SUCCESS",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Information);
+                resetform();
+            }
+            else
+            {
+                if (MessageBox.Show("UPDATE", "Do you want to Update the record", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    updateRecord();
+                }
+            }
+
+
         }
         private void updateRecord()
         {
+            int _id = int.Parse(txtPatientId.Text.ToString());
+            var patient = db.Patients.Where(a => a.id == _id).FirstOrDefault();
+            if (patient != null)
+            {
+                patient.fullName = txtPatientName.Text.ToString();
+                patient.mobileName = txtMobile.Text.ToString();
+                patient.age = int.Parse(txtAge.Text.ToString());
+                patient.weight = int.Parse(txtWeight.Text.ToString());
+                patient.hight = int.Parse(txtHight.Text.ToString());
+                patient.patientType = rbPrivate.Checked ? "Private" : "Staff";
+                patient.gender = rbMale.Checked;
+                patient.bloodGroup = cmbBloodGroup.SelectedValue.ToString();
+                patient.bloodPressure = int.Parse(txtPatientName.Text.ToString());
 
+                var _bill = db.Bills.Where(a => a.patientId == _id).FirstOrDefault();
+                _bill.gross = int.Parse(lblGross.Text);
+                _bill.billAmount = int.Parse(lblBillAmmount.Text);
+                _bill.balance = int.Parse(lblBanalce.Text);
+                _bill.createdBy = auth.currentUser;
+                _bill.createDate = DateTime.Now;
+                _bill.tokenNumber = int.Parse(lblToken.Text);
+                _bill.remarks = txtRemarks.Text;
+
+                int _docId, _serviceId;
+                _docId = _serviceId = 0;
+                foreach (DataGridViewRow row in dgvVisit.Rows)
+                {
+                    var _billDetails = db.BillDetails.Where(a => a.billId == _bill.id).FirstOrDefault();
+                    if (bool.Parse(row.Cells[1].Value.ToString()))
+                    {
+                        _docId = int.Parse(row.Cells[0].Value.ToString());
+                        _billDetails.doctorId = _docId;
+                    }
+                    else if (!bool.Parse(row.Cells[1].Value.ToString()))
+                    {
+                        _serviceId = int.Parse(row.Cells[0].Value.ToString());
+                        _billDetails.serviceId = _serviceId;
+                    }
+
+                    db.SaveChanges();
+
+                }
+                MessageBox.Show("UPDATE", "Record has been Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
 
@@ -360,23 +442,17 @@ namespace ShifaClinic.Patient
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
-            //***1***add cmb services Or doc to the data grid view 
-
             bindgdvVisit();
 
-
-
-            /// ***1***  bill will add up with all the prices mentioned in the rows(serviceCarges + DoctorFee)
-            ///***2***refresh cmb services ,cmb doc and cmb docDepartment 
             cmbServices.SelectedIndex = 0;
-            // cmbDoctorDepartment.SelectedIndex = 0;
             lblDocFee.Text = "0";
         }
 
         private void cmbServices_SelectedIndexChanged(object sender, EventArgs e)
         {
             // cmbdoctor and cmbdoctordepartment selected index become null or empty
-            if (cmbServices.SelectedIndex == 1)
+            lblDocFee.Text = "0";
+            if (cmbServices.SelectedIndex == 1 && cmbServices.Text == "DOCTOR VISIT")
             {
                 this.bindDoctorCategoryCombobox();
                 cmbDoctor.Enabled = true;
@@ -386,7 +462,7 @@ namespace ShifaClinic.Patient
             {
                 var _item = cmbServices.SelectedItem as ComboBoxItem;
                 int _serviceId = int.Parse(_item.Value.ToString());
-                if (_serviceId > 1)
+                if (_serviceId > 0)
                 {
                     var _fee = db.Services
                         .Where(x => x.id == _serviceId)
@@ -459,8 +535,6 @@ namespace ShifaClinic.Patient
 
         }
 
-
-
         private void txtPaidAmmount_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty(txtPaidAmmount.Text))
@@ -528,6 +602,8 @@ namespace ShifaClinic.Patient
             {
                 e.Handled = true;
                 this.toggleUserList();
+                //this.ActiveControl = txtPatientName;
+                txtPatientName.Focus();
             }
         }
 
@@ -584,8 +660,19 @@ namespace ShifaClinic.Patient
                 {
                     this.cmbServices.Items.Insert(1, new ComboBoxItem(-1, "DOCTOR VISIT"));
                 }
-
             }
+        }
+        private void dgvVisit_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            // dgvVisit_CellContentClick(sender, new DataGridViewCellEventArgs(4, e.RowIndex));
+        }
+
+        private void dgvVisit_UserDeletedRow(object sender, DataGridViewRowEventArgs e)
+        {
+        }
+        private void dgvVisit_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            //MessageBox.Show(e.Row.);
         }
 
         private void txtDiscount_TextChanged(object sender, EventArgs e)
@@ -606,6 +693,95 @@ namespace ShifaClinic.Patient
         {
             TextBox textBox = (TextBox)sender;
             textBox.SelectAll();
+        }
+
+        private void txtDiscountInPercentage_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtPaidAmmount_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtWeight_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtAge_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtPatientName_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtMobile_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtHight_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void txtBloodPressure_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+
+        private void frmPatientInvoiceForm_Click(object sender, EventArgs e)
+        {
+            this.gvPatientList.Visible = false;
+        }
+
+        private void gvPatientList_Leave(object sender, EventArgs e)
+        {
+            this.gvPatientList.Visible = false;
+        }
+
+        private void txtPatientName_Leave(object sender, EventArgs e)
+        {
+            validateform();
+        }
+
+        private void btnPrintDetails_Click(object sender, EventArgs e)
+        {
+            string p = Path.GetDirectoryName(Application.ExecutablePath);
+            string path = p.Remove(p.Length - 10) + "\\Patient\\reports\\Invoice_PatientInvoiceForm.rdlc";
+            LocalReport report = new LocalReport();
+            report.ReportPath = path;
+            var dt = new dsPatient.dtRpt_Invoice_PatientInvoiceFormDataTable();
+            var row = dt.NewRow();
+            row["name"] = "Sohail Arshad";
+            row["tokenNumber"] = 54;
+            dt.Rows.Add(row);
+            ReportDataSource ds = new ReportDataSource();
+            ds.Name = dt.TableName;
+            ds.Value = dt;
+            report.DataSources.Add(ds);
+            //report.PrintToPrinter();
+            var print = new ReportPrint();
+            print.PrintToPrinter(report);
+
+        }
+
+        private void btnNew_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -15,6 +15,7 @@ namespace ShifaClinic.DataContext
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<BillDetail> BillDetails { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
+        public virtual DbSet<DoctorBookClosing> DoctorBookClosings { get; set; }
         public virtual DbSet<DoctorDepartment> DoctorDepartments { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
@@ -37,6 +38,11 @@ namespace ShifaClinic.DataContext
                 .HasMany(e => e.Doctors)
                 .WithOptional(e => e.DoctorDepartment)
                 .HasForeignKey(e => e.departmentId);
+
+            modelBuilder.Entity<Doctor>()
+                .HasMany(e => e.DoctorBookClosings)
+                .WithOptional(e => e.Doctor)
+                .HasForeignKey(e => e.docId);
 
             modelBuilder.Entity<Doctor>()
                 .HasMany(e => e.Tokens)

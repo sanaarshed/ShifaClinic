@@ -12,6 +12,7 @@ namespace ShifaClinic.DataContext
         public Doctor()
         {
             BillDetails = new HashSet<BillDetail>();
+            DoctorBookClosings = new HashSet<DoctorBookClosing>();
             Tokens = new HashSet<Token>();
         }
 
@@ -47,6 +48,7 @@ namespace ShifaClinic.DataContext
 
         [StringLength(50)]
         public string CNIC { get; set; }
+
         public int createdBy { get; set; }
 
         public DateTime createdDate { get; set; }
@@ -57,6 +59,9 @@ namespace ShifaClinic.DataContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorBookClosing> DoctorBookClosings { get; set; }
 
         public virtual DoctorDepartment DoctorDepartment { get; set; }
 

@@ -6,17 +6,22 @@ namespace ShifaClinic.DataContext
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class Token
+    [Table("DoctorBookClosing")]
+    public partial class DoctorBookClosing
     {
         public int id { get; set; }
 
-        public int? billId { get; set; }
-
-        public int? tokenNumber { get; set; }
-
-        public DateTime? tokenDate { get; set; }
-
         public int? docId { get; set; }
+
+        public int? total { get; set; }
+
+        public int? balance { get; set; }
+
+        public int? paidAmmount { get; set; }
+
+        public DateTime createdDate { get; set; }
+
+        public int createdBy { get; set; }
 
         public virtual Doctor Doctor { get; set; }
     }

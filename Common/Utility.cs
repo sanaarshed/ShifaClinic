@@ -39,6 +39,21 @@ namespace ShifaClinic.Common
                 (sender as TextBox).Text = "0";
             }
         }
+        public static void validate() {
+
+            //bool _result = false;
+            //formError.Clear();
+            //if (string.IsNullOrEmpty(txtPatientName.Text))
+            //{
+            //    this.formError.SetError(txtPatientName, "this field is required");
+            //}
+            //else
+            //{
+            //    this.formError.SetError(txtPatientName, "");
+            //}
+            //return _result;
+
+        }
 
     }
 }

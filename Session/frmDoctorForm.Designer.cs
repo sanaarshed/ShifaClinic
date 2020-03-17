@@ -476,7 +476,7 @@
             this.dgvDoctorsList.ReadOnly = true;
             this.dgvDoctorsList.Size = new System.Drawing.Size(562, 362);
             this.dgvDoctorsList.TabIndex = 3;
-            this.dgvDoctorsList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDoctorsList_CellFormatting);
+             this.dgvDoctorsList.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.dgvDoctorsList_CellFormatting);
             // 
             // id
             // 

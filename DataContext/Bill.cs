@@ -36,10 +36,11 @@ namespace ShifaClinic.DataContext
         public int? modifiedBy { get; set; }
 
         public DateTime? modifyDate { get; set; }
-        public int? tokenNumber { get; set; }
 
         [StringLength(1000)]
         public string remarks { get; set; }
+
+        public int? tokenNumber { get; set; }
 
         public virtual Patient Patient { get; set; }
 

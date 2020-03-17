@@ -8,7 +8,6 @@ namespace ShifaClinic.DataContext
 
     public partial class BillDetail
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         public int billId { get; set; }

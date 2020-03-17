@@ -26,6 +26,8 @@ namespace ShifaClinic.Patient
             {
                 this.formError.SetError(txtPatientName, "");
             }
+            return result;
+
 
             //if (string.IsNullOrEmpty(txtMobileNumber.Text))
             //{
@@ -37,7 +39,6 @@ namespace ShifaClinic.Patient
             //}
 
 
-            return result;
         }
         public frmEntryForm()
         {

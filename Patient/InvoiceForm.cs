@@ -185,7 +185,7 @@ namespace ShifaClinic.Patient
                 //_p.bloodGroup = i.bloodGroup;
 
                 _patients.Add(_p);
-                
+
             }
 
             gvPatientList.AutoGenerateColumns = false;
@@ -217,7 +217,7 @@ namespace ShifaClinic.Patient
             this.toggleUserList();
         }
 
-      
+
 
         private void btnSaveInvoice_Click(object sender, EventArgs e)
         {
@@ -391,7 +391,7 @@ namespace ShifaClinic.Patient
             this.onlyAllowNumericValue(sender, e);
         }
 
-        
+
         private void txtBloodPressure_KeyPress(object sender, KeyPressEventArgs e)
         {
             this.onlyAllowNumericValue(sender, e);
@@ -425,7 +425,7 @@ namespace ShifaClinic.Patient
             }
         }
 
-       
+
 
         private void gvPatientList_KeyDown(object sender, KeyEventArgs e)
         {
