@@ -31,16 +31,16 @@
             this.components = new System.ComponentModel.Container();
             this.label13 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.tbSearchByName = new System.Windows.Forms.TextBox();
+            this.txtSearchByName = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnReset = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnReset = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.btnSearchByDate = new System.Windows.Forms.Button();
-            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
             this.dtpTo = new System.Windows.Forms.DateTimePicker();
+            this.dtpFrom = new System.Windows.Forms.DateTimePicker();
+            this.btnSearchByDate = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.PatientId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gvPatientName = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -77,7 +77,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.tbSearchByName);
+            this.groupBox1.Controls.Add(this.txtSearchByName);
             this.groupBox1.Location = new System.Drawing.Point(12, 62);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(257, 72);
@@ -85,12 +85,13 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search By: Patient Name , Mobile Number, CNIC";
             // 
-            // tbSearchByName
+            // txtSearchByName
             // 
-            this.tbSearchByName.Location = new System.Drawing.Point(10, 36);
-            this.tbSearchByName.Name = "tbSearchByName";
-            this.tbSearchByName.Size = new System.Drawing.Size(235, 20);
-            this.tbSearchByName.TabIndex = 3;
+            this.txtSearchByName.Location = new System.Drawing.Point(10, 36);
+            this.txtSearchByName.Name = "txtSearchByName";
+            this.txtSearchByName.Size = new System.Drawing.Size(235, 20);
+            this.txtSearchByName.TabIndex = 3;
+            this.txtSearchByName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSearchByName_KeyPress);
             // 
             // groupBox2
             // 
@@ -101,19 +102,6 @@
             this.groupBox2.Size = new System.Drawing.Size(184, 72);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
-            // 
-            // btnReset
-            // 
-            this.btnReset.AutoSize = true;
-            this.btnReset.BackColor = System.Drawing.Color.RoyalBlue;
-            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnReset.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btnReset.Location = new System.Drawing.Point(9, 31);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(75, 25);
-            this.btnReset.TabIndex = 0;
-            this.btnReset.Text = "Reset";
-            this.btnReset.UseVisualStyleBackColor = false;
             // 
             // btnClose
             // 
@@ -127,6 +115,19 @@
             this.btnClose.TabIndex = 1;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = false;
+            // 
+            // btnReset
+            // 
+            this.btnReset.AutoSize = true;
+            this.btnReset.BackColor = System.Drawing.Color.RoyalBlue;
+            this.btnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReset.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btnReset.Location = new System.Drawing.Point(9, 31);
+            this.btnReset.Name = "btnReset";
+            this.btnReset.Size = new System.Drawing.Size(75, 25);
+            this.btnReset.TabIndex = 0;
+            this.btnReset.Text = "Reset";
+            this.btnReset.UseVisualStyleBackColor = false;
             // 
             // groupBox3
             // 
@@ -142,23 +143,19 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Search By Date";
             // 
-            // label1
+            // dtpTo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "From";
+            this.dtpTo.Location = new System.Drawing.Point(105, 36);
+            this.dtpTo.Name = "dtpTo";
+            this.dtpTo.Size = new System.Drawing.Size(95, 20);
+            this.dtpTo.TabIndex = 6;
             // 
-            // label2
+            // dtpFrom
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(140, 20);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(16, 13);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "to";
+            this.dtpFrom.Location = new System.Drawing.Point(6, 36);
+            this.dtpFrom.Name = "dtpFrom";
+            this.dtpFrom.Size = new System.Drawing.Size(93, 20);
+            this.dtpFrom.TabIndex = 5;
             // 
             // btnSearchByDate
             // 
@@ -173,19 +170,23 @@
             this.btnSearchByDate.Text = "Search";
             this.btnSearchByDate.UseVisualStyleBackColor = false;
             // 
-            // dtpFrom
+            // label2
             // 
-            this.dtpFrom.Location = new System.Drawing.Point(6, 36);
-            this.dtpFrom.Name = "dtpFrom";
-            this.dtpFrom.Size = new System.Drawing.Size(93, 20);
-            this.dtpFrom.TabIndex = 5;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(140, 20);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(16, 13);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "to";
             // 
-            // dtpTo
+            // label1
             // 
-            this.dtpTo.Location = new System.Drawing.Point(105, 36);
-            this.dtpTo.Name = "dtpTo";
-            this.dtpTo.Size = new System.Drawing.Size(95, 20);
-            this.dtpTo.TabIndex = 6;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(10, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(30, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "From";
             // 
             // dataGridView1
             // 
@@ -289,7 +290,7 @@
 
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox tbSearchByName;
+        private System.Windows.Forms.TextBox txtSearchByName;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Button btnReset;

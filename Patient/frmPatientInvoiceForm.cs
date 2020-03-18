@@ -310,78 +310,67 @@ namespace ShifaClinic.Patient
         }
         private void insertRecord()
         {
-            validateform();
+            
 
+            var _patientRecord = new DataContext.Patient();
+            _patientRecord.fullName = txtPatientName.Text.Trim();
+            _patientRecord.mobileName = txtMobile.Text.Trim();
+            _patientRecord.age = int.Parse(txtAge.Text.Trim());
+            _patientRecord.patientType = rbPrivate.Checked ? "Private" : "Staff";
+            _patientRecord.weight = int.Parse(txtWeight.Text.Trim());
+            _patientRecord.bloodPressure = int.Parse(txtBloodPressure.Text.Trim());
+            _patientRecord.gender = !rbMale.Checked;
+            _patientRecord.createdBy = 1;
+            _patientRecord.createDate = DateTime.Now;
+            _patientRecord.bloodGroup = this.cmbBloodGroup.Text.Trim();
+            _patientRecord.hight = double.Parse(txtHight.Text.Trim());
 
-            if (txtPatientId.Text == "0")
+            db.Patients.Add(_patientRecord);
+            db.SaveChanges();
+            var _bill = new Bill();
+            _bill.gross = int.Parse(lblGross.Text);
+            _bill.billAmount = int.Parse(lblBillAmmount.Text);
+            _bill.balance = int.Parse(lblBanalce.Text);
+            _bill.patientId = _patientRecord.id;
+            _bill.createdBy = auth.currentUser;
+            _bill.createDate = DateTime.Now;
+            _bill.tokenNumber = int.Parse(lblToken.Text);
+            _bill.remarks = txtRemarks.Text;
+
+            db.Bills.Add(_bill);
+            db.SaveChanges();
+
+            int _docId, _serviceId;
+            _docId = _serviceId = 0;
+            foreach (DataGridViewRow row in dgvVisit.Rows)
             {
-                var _patientRecord = new DataContext.Patient();
-                _patientRecord.fullName = txtPatientName.Text.Trim();
-                _patientRecord.mobileName = txtMobile.Text.Trim();
-                _patientRecord.age = int.Parse(txtAge.Text.Trim());
-                _patientRecord.patientType = rbPrivate.Checked ? "Private" : "Staff";
-                _patientRecord.weight = int.Parse(txtWeight.Text.Trim());
-                _patientRecord.bloodPressure = int.Parse(txtBloodPressure.Text.Trim());
-                _patientRecord.gender = !rbMale.Checked;
-                _patientRecord.createdBy = 1;
-                _patientRecord.createDate = DateTime.Now;
-                _patientRecord.bloodGroup = this.cmbBloodGroup.Text.Trim();
-                _patientRecord.hight = int.Parse(txtHight.Text.Trim());
-
-                db.Patients.Add(_patientRecord);
-                db.SaveChanges();
-                var _bill = new Bill();
-                _bill.gross = int.Parse(lblGross.Text);
-                _bill.billAmount = int.Parse(lblBillAmmount.Text);
-                _bill.balance = int.Parse(lblBanalce.Text);
-                _bill.patientId = _patientRecord.id;
-                _bill.createdBy = auth.currentUser;
-                _bill.createDate = DateTime.Now;
-                _bill.tokenNumber = int.Parse(lblToken.Text);
-                _bill.remarks = txtRemarks.Text;
-
-                db.Bills.Add(_bill);
-                db.SaveChanges();
-
-                int _docId, _serviceId;
-                _docId = _serviceId = 0;
-                foreach (DataGridViewRow row in dgvVisit.Rows)
+                var _billDetails = new BillDetail();
+                if (bool.Parse(row.Cells[1].Value.ToString()))
                 {
-                    var _billDetails = new BillDetail();
-                    if (bool.Parse(row.Cells[1].Value.ToString()))
-                    {
-                        _docId = int.Parse(row.Cells[0].Value.ToString());
-                        _billDetails.doctorId = _docId;
-                    }
-                    else if (!bool.Parse(row.Cells[1].Value.ToString()))
-                    {
-                        _serviceId = int.Parse(row.Cells[0].Value.ToString());
-                        _billDetails.serviceId = _serviceId;
-                    }
-
-                    _billDetails.billId = _bill.id;
-                    db.BillDetails.Add(_billDetails);
-
-                    db.SaveChanges();
+                    _docId = int.Parse(row.Cells[0].Value.ToString());
+                    _billDetails.doctorId = _docId;
+                }
+                else if (!bool.Parse(row.Cells[1].Value.ToString()))
+                {
+                    _serviceId = int.Parse(row.Cells[0].Value.ToString());
+                    _billDetails.serviceId = _serviceId;
                 }
 
-                MessageBox.Show("Record Added successfully...",
-                               "SUCCESS",
-                               MessageBoxButtons.OK,
-                               MessageBoxIcon.Information);
-                resetform();
-            }
-            else
-            {
-                if (MessageBox.Show("UPDATE", "Do you want to Update the record", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    updateRecord();
-                }
+                _billDetails.billId = _bill.id;
+                db.BillDetails.Add(_billDetails);
+
+                db.SaveChanges();
             }
 
-
+            MessageBox.Show("Record Added successfully...",
+                           "SUCCESS",
+                           MessageBoxButtons.OK,
+                           MessageBoxIcon.Information);
+            resetform();
         }
+
+
+
         private void updateRecord()
         {
             int _id = int.Parse(txtPatientId.Text.ToString());
@@ -392,7 +381,7 @@ namespace ShifaClinic.Patient
                 patient.mobileName = txtMobile.Text.ToString();
                 patient.age = int.Parse(txtAge.Text.ToString());
                 patient.weight = int.Parse(txtWeight.Text.ToString());
-                patient.hight = int.Parse(txtHight.Text.ToString());
+                patient.hight = double.Parse(txtHight.Text.ToString());
                 patient.patientType = rbPrivate.Checked ? "Private" : "Staff";
                 patient.gender = rbMale.Checked;
                 patient.bloodGroup = cmbBloodGroup.SelectedValue.ToString();
@@ -622,7 +611,11 @@ namespace ShifaClinic.Patient
                     MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     if (string.IsNullOrEmpty(txtPatientId.Text))
+                    {
+                        validateform();
                         insertRecord();
+                        bindPatientList();
+                    }
                     else
                         updateRecord();
                 }
@@ -781,6 +774,7 @@ namespace ShifaClinic.Patient
 
         private void btnNew_Click(object sender, EventArgs e)
         {
+            resetform();
 
         }
     }
