@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ShifaClinic.Common
 {
@@ -23,25 +24,36 @@ namespace ShifaClinic.Common
             Export(report);
         }
 
-        public void Export(LocalReport report, bool print = true)
+        private void Export(LocalReport report, bool print = true)
         {
+            float width = 0, height = 0;
             var reportSettings = report.GetDefaultPageSettings();
-            float width = (float)reportSettings.PaperSize.Width / 100;
-            float height = (float)reportSettings.PaperSize.Height / 100;
+            if (reportSettings.IsLandscape)
+            {
+                height = (float)reportSettings.PaperSize.Width / 100;
+                width = (float)reportSettings.PaperSize.Height / 100;
+            }
+            else
+            {
+                width = (float)reportSettings.PaperSize.Width / 100;
+                height = (float)reportSettings.PaperSize.Height / 100;
+            }
             float marginTop = (float)reportSettings.Margins.Top / 100;
             float marginLeft = (float)reportSettings.Margins.Left / 100;
             float marginRight = (float)reportSettings.Margins.Right / 100;
             float marginBottom = (float)reportSettings.Margins.Bottom / 100;
-            string deviceInfo =
-             $@"<DeviceInfo>
-                <OutputFormat>EMF</OutputFormat>
-                <PageWidth>{width}in</PageWidth>
-                <PageHeight>{height}in</PageHeight>
-                <MarginTop>{marginTop}in</MarginTop>
-                <MarginLeft>{marginLeft}in</MarginLeft>
-                <MarginRight>{marginRight}in</MarginRight>
-                <MarginBottom>{marginBottom}in</MarginBottom>
-            </DeviceInfo>";
+
+            string deviceInfo = "";
+            deviceInfo = $@"<DeviceInfo>
+                    <OutputFormat>EMF</OutputFormat>
+                    <PageWidth>{width}in</PageWidth>
+                    <PageHeight>{height}in</PageHeight>
+                    <MarginTop>{marginTop}in</MarginTop>
+                    <MarginLeft>{marginLeft}in</MarginLeft>
+                    <MarginRight>{marginRight}in</MarginRight>
+                    <MarginBottom>{marginBottom}in</MarginBottom>
+                </DeviceInfo>";
+
             Warning[] warnings;
             m_streams = new List<Stream>();
             report.Render("Image", deviceInfo, CreateStream, out warnings);
@@ -55,19 +67,28 @@ namespace ShifaClinic.Common
             }
         }
 
-        public void Print(ReportPageSettings reportPageSettings)
+        private void Print(ReportPageSettings reportPageSettings)
         {
             if (m_streams == null || m_streams.Count == 0)
                 throw new Exception("Error: no stream to print.");
             PrintDocument printDoc = new PrintDocument();
-            printDoc.DefaultPageSettings.Margins = reportPageSettings.Margins;
-            printDoc.DefaultPageSettings.PaperSize = reportPageSettings.PaperSize;
-
-            printDoc.DefaultPageSettings.Margins = reportPageSettings.Margins;
-            //printDoc.DefaultPageSettings.PrintableArea= reportPageSettings.PaperSize;
-
+            printDoc.PrinterSettings.MaximumPage = 1;
             printDoc.DefaultPageSettings.Landscape = reportPageSettings.IsLandscape;
-            printDoc.PrinterSettings.DefaultPageSettings.PaperSize = printDoc.DefaultPageSettings.PaperSize;
+            
+            if (reportPageSettings.IsLandscape)
+            {
+                printDoc.DefaultPageSettings.PaperSize = new PaperSize("9 X 6",
+                    reportPageSettings.PaperSize.Height,
+                    reportPageSettings.PaperSize.Width);
+            }
+            else
+            {
+            printDoc.DefaultPageSettings.PaperSize = reportPageSettings.PaperSize;
+            }
+            printDoc.DefaultPageSettings.Margins = reportPageSettings.Margins;
+            using (var db = new ShifaClinic.DataContext.clinicDbContext()) {
+                printDoc.PrinterSettings.PrinterName = db.PrinterInfoes.Where(p => p.id == 1).FirstOrDefault().name; ;
+            }
             if (!printDoc.PrinterSettings.IsValid)
             {
                 throw new Exception("Error: cannot find the default printer.");
@@ -80,32 +101,23 @@ namespace ShifaClinic.Common
             }
         }
 
-        public Stream CreateStream(string name, string fileNameExtension, Encoding encoding, string mimeType, bool willSeek)
+        private Stream CreateStream(string name, string fileNameExtension, Encoding encoding, string mimeType, bool willSeek)
         {
             Stream stream = new MemoryStream();
             m_streams.Add(stream);
             return stream;
         }
 
-        public void PrintPage(object sender, PrintPageEventArgs ev)
+        private void PrintPage(object sender, PrintPageEventArgs ev)
         {
-
             var pd = sender as PrintDocument;
             Metafile pageImage = new
                Metafile(m_streams[m_currentPageIndex]);
 
             // Adjust rectangular area with printer margins.
-            Rectangle adjustedRect = new Rectangle(
-                0,
-                0,
-                pd.DefaultPageSettings.PaperSize.Width,
-                pd.DefaultPageSettings.PaperSize.Height);
-
-            //Rectangle adjustedRect = new Rectangle(
-            //    ev.PageBounds.Left - (int)ev.PageSettings.HardMarginX,
-            //    ev.PageBounds.Top - (int)ev.PageSettings.HardMarginY,
-            //    ev.PageBounds.Width,
-            //    ev.PageBounds.Height);
+            Rectangle adjustedRect = new Rectangle();
+            adjustedRect.Width = pd.DefaultPageSettings.PaperSize.Width;
+            adjustedRect.Height = pd.DefaultPageSettings.PaperSize.Height;
 
             // Draw a white background for the report
             ev.Graphics.FillRectangle(Brushes.White, adjustedRect);
@@ -118,7 +130,7 @@ namespace ShifaClinic.Common
             ev.HasMorePages = (m_currentPageIndex < m_streams.Count);
         }
 
-        public void DisposePrint()
+        private void DisposePrint()
         {
             if (m_streams != null)
             {
@@ -126,6 +138,20 @@ namespace ShifaClinic.Common
                     stream.Close();
                 m_streams = null;
             }
+        }
+
+        public void Print(System.Data.DataTable DataSource, string DatasetName, string ReportFileName, string FolderName)
+        {
+            string p = Path.GetDirectoryName(Application.ExecutablePath);
+            string path = p.Remove(p.Length - 10) + "\\" + FolderName + "\\Reports\\" + ReportFileName;
+            LocalReport report = new LocalReport();
+            report.ReportPath = path;
+            ReportDataSource ds = new ReportDataSource();
+            ds.Name = DatasetName;
+            ds.Value = DataSource;
+            report.DataSources.Add(ds);
+
+            this.PrintToPrinter(report);
         }
 
     }

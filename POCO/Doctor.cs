@@ -10,16 +10,15 @@ namespace ShifaClinic.POCO
     {
         public int id { get; set; }
         public string name { get; set; }
-        public int mobileNumber { get; set; }
+        public string mobileNumber { get; set; }
         public string departmentTitle { get; set; }
         public string gender { get; set; }
-        public int fee { get; set; }
-        public int share { get; set; }
-        public int licenseNumber { get; set; }
-        public int age { get; set; }
+        public string fee { get; set; }
+        public string licenseNumber { get; set; }
+        public string dob { get; set; }
         public string Address { get; set; }
-        public int backupPhone { get; set; }
-        public int CNIC { get; set; }
+        public string backupPhone { get; set; }
+        public string CNIC { get; set; }
 
     }
 }

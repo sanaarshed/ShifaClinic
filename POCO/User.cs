@@ -9,6 +9,7 @@ namespace ShifaClinic.POCO
     public class User
     {
         public int id { get; set; }
+        public string fullName { get; set; }
         public string username { get; set; }
         public string email { get; set; }
         public string status { get; set; }

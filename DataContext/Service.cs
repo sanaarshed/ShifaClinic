@@ -12,16 +12,20 @@ namespace ShifaClinic.DataContext
         public Service()
         {
             BillDetails = new HashSet<BillDetail>();
+            DoctorShareConfigurations = new HashSet<DoctorShareConfiguration>();
+            DoctorShareConfigurationHistories = new HashSet<DoctorShareConfigurationHistory>();
+            InvestorShareConfigurations = new HashSet<InvestorShareConfiguration>();
+            InvestorShareConfigurationHistories = new HashSet<InvestorShareConfigurationHistory>();
+            ServiceReturns = new HashSet<ServiceReturn>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [StringLength(100)]
         public string title { get; set; }
 
         [StringLength(1000)]
-        public string descriptino { get; set; }
+        public string description { get; set; }
 
         public int? price { get; set; }
 
@@ -35,6 +39,21 @@ namespace ShifaClinic.DataContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorShareConfiguration> DoctorShareConfigurations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorShareConfigurationHistory> DoctorShareConfigurationHistories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvestorShareConfiguration> InvestorShareConfigurations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvestorShareConfigurationHistory> InvestorShareConfigurationHistories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceReturn> ServiceReturns { get; set; }
 
         public virtual User User { get; set; }
 

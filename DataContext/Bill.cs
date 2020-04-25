@@ -13,21 +13,23 @@ namespace ShifaClinic.DataContext
         public Bill()
         {
             BillDetails = new HashSet<BillDetail>();
+            BillProcedures = new HashSet<BillProcedure>();
+            ServiceReturns = new HashSet<ServiceReturn>();
         }
 
         public int id { get; set; }
 
         public int patientId { get; set; }
 
-        public int? gross { get; set; }
+        public double? gross { get; set; }
 
-        public int? discount { get; set; }
+        public double? discount { get; set; }
 
-        public int? billAmount { get; set; }
+        public double? billAmount { get; set; }
 
-        public int? paid { get; set; }
+        public double? paid { get; set; }
 
-        public int? balance { get; set; }
+        public double? balance { get; set; }
 
         public int createdBy { get; set; }
 
@@ -42,6 +44,16 @@ namespace ShifaClinic.DataContext
 
         public int? tokenNumber { get; set; }
 
+        public int? bloodPressureUpper { get; set; }
+
+        public int? bloodPressureLower { get; set; }
+
+        public int? patientAge { get; set; }
+
+        public int? patientHeight { get; set; }
+
+        public int? patientWeight { get; set; }
+
         public virtual Patient Patient { get; set; }
 
         public virtual User User { get; set; }
@@ -50,5 +62,11 @@ namespace ShifaClinic.DataContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillProcedure> BillProcedures { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceReturn> ServiceReturns { get; set; }
     }
 }

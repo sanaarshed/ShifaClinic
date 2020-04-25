@@ -13,24 +13,45 @@ namespace ShifaClinic.DataContext
         {
             Bills = new HashSet<Bill>();
             Bills1 = new HashSet<Bill>();
+            BillProcedures = new HashSet<BillProcedure>();
+            BillProcedures1 = new HashSet<BillProcedure>();
             Designations = new HashSet<Designation>();
             Designations1 = new HashSet<Designation>();
             DoctorDepartments = new HashSet<DoctorDepartment>();
             DoctorDepartments1 = new HashSet<DoctorDepartment>();
+            Doctors = new HashSet<Doctor>();
+            Doctors1 = new HashSet<Doctor>();
+            DoctorShareConfigurations = new HashSet<DoctorShareConfiguration>();
+            DoctorShareConfigurations1 = new HashSet<DoctorShareConfiguration>();
+            DoctorShareConfigurationHistories = new HashSet<DoctorShareConfigurationHistory>();
             Employees = new HashSet<Employee>();
             Employees1 = new HashSet<Employee>();
+            Investors = new HashSet<Investor>();
+            Investors1 = new HashSet<Investor>();
+            InvestorShareConfigurations = new HashSet<InvestorShareConfiguration>();
+            InvestorShareConfigurations1 = new HashSet<InvestorShareConfiguration>();
+            InvestorShareConfigurationHistories = new HashSet<InvestorShareConfigurationHistory>();
             logs = new HashSet<log>();
             Patients = new HashSet<Patient>();
             Patients1 = new HashSet<Patient>();
+            ProcedureReturns = new HashSet<ProcedureReturn>();
+            ServiceReturns = new HashSet<ServiceReturn>();
             Services = new HashSet<Service>();
             Services1 = new HashSet<Service>();
             Users1 = new HashSet<User>();
             Users11 = new HashSet<User>();
+            Vouchers = new HashSet<Voucher>();
         }
 
         public int id { get; set; }
 
         public int? roleId { get; set; }
+
+        [StringLength(200)]
+        public string fullName { get; set; }
+
+        [StringLength(100)]
+        public string mobileNumber { get; set; }
 
         [StringLength(50)]
         public string username { get; set; }
@@ -58,6 +79,12 @@ namespace ShifaClinic.DataContext
         public virtual ICollection<Bill> Bills1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillProcedure> BillProcedures { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BillProcedure> BillProcedures1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Designation> Designations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -70,10 +97,40 @@ namespace ShifaClinic.DataContext
         public virtual ICollection<DoctorDepartment> DoctorDepartments1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Doctor> Doctors1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorShareConfiguration> DoctorShareConfigurations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorShareConfiguration> DoctorShareConfigurations1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorShareConfigurationHistory> DoctorShareConfigurationHistories { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employees1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Investor> Investors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Investor> Investors1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvestorShareConfiguration> InvestorShareConfigurations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvestorShareConfiguration> InvestorShareConfigurations1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<InvestorShareConfigurationHistory> InvestorShareConfigurationHistories { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<log> logs { get; set; }
@@ -84,7 +141,13 @@ namespace ShifaClinic.DataContext
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Patient> Patients1 { get; set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProcedureReturn> ProcedureReturns { get; set; }
+
         public virtual Role Role { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceReturn> ServiceReturns { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Service> Services { get; set; }
@@ -101,5 +164,8 @@ namespace ShifaClinic.DataContext
         public virtual ICollection<User> Users11 { get; set; }
 
         public virtual User User2 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Voucher> Vouchers { get; set; }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,9 +39,11 @@ namespace ShifaClinic.Common
             if (string.IsNullOrEmpty((sender as TextBox).Text))
             {
                 (sender as TextBox).Text = "0";
+                (sender as TextBox).SelectAll();
             }
         }
-        public static void validate() {
+        public static void validate()
+        {
 
             //bool _result = false;
             //formError.Clear();
@@ -55,5 +59,35 @@ namespace ShifaClinic.Common
 
         }
 
+        public static System.Data.DataTable MapToDataTable<T>(T classObject) where T : class
+        {
+            System.Data.DataTable dt = new System.Data.DataTable();
+            try
+            {
+                dt.TableName = "localVehicleDetails";
+
+                foreach (System.Reflection.PropertyInfo property in classObject.GetType().GetProperties())
+                {
+                    if (property.PropertyType == typeof(List<string>))
+                        dt.Columns.Add(new System.Data.DataColumn(property.Name, typeof(string)));
+                    else
+                        dt.Columns.Add(new System.Data.DataColumn(property.Name, property.PropertyType));
+                }
+                
+
+                System.Data.DataRow newRow = dt.NewRow();
+                foreach (System.Reflection.PropertyInfo property in classObject.GetType().GetProperties())
+                {
+                    newRow[property.Name] = classObject.GetType().GetProperty(property.Name).GetValue(classObject, null);
+                }
+
+                dt.Rows.Add(newRow);
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

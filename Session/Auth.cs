@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShifaClinic.POCO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,9 +23,18 @@ namespace ShifaClinic.Session
             return "";
         }
 
-        public int currentUser
+        public User currentUser
         {
-            get { return 1; } //return loggedInUserId;
+            get
+            {
+                return new User()
+                {
+                    id = 1,
+                    fullName = "Sohail Arshad",
+                    username = "sohailarshad",
+                    email = "rmsohaila@gmail.com"
+                };
+            } //return loggedInUserId;
         }
     }
 }

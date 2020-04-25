@@ -13,6 +13,7 @@ namespace ShifaClinic.DataContext
         public Patient()
         {
             Bills = new HashSet<Bill>();
+            ServiceReturns = new HashSet<ServiceReturn>();
         }
 
         public int id { get; set; }
@@ -22,9 +23,12 @@ namespace ShifaClinic.DataContext
         public string fullName { get; set; }
 
         [StringLength(50)]
-        public string mobileName { get; set; }
+        public string mobileNumber { get; set; }
 
         public bool? gender { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? dob { get; set; }
 
         public int? age { get; set; }
 
@@ -33,7 +37,7 @@ namespace ShifaClinic.DataContext
 
         public double? weight { get; set; }
 
-        public double? hight { get; set; }
+        public double? height { get; set; }
 
         public double? bloodPressure { get; set; }
 
@@ -46,6 +50,9 @@ namespace ShifaClinic.DataContext
         [StringLength(50)]
         public string fatherMobile { get; set; }
 
+        [StringLength(50)]
+        public string address { get; set; }
+
         public int createdBy { get; set; }
 
         public int? modifiedBy { get; set; }
@@ -53,10 +60,6 @@ namespace ShifaClinic.DataContext
         public DateTime? createDate { get; set; }
 
         public DateTime? modifiedDate { get; set; }
-
-        public int? token { get; set; }
-
-        public int? doctorId { get; set; }
 
         [StringLength(20)]
         public string patientType { get; set; }
@@ -67,5 +70,8 @@ namespace ShifaClinic.DataContext
         public virtual User User { get; set; }
 
         public virtual User User1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ServiceReturn> ServiceReturns { get; set; }
     }
 }
