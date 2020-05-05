@@ -27,7 +27,7 @@ namespace ShifaClinic.DataContext
         [StringLength(1000)]
         public string description { get; set; }
 
-        public int? price { get; set; }
+        public Double? price { get; set; }
 
         public int? createdBy { get; set; }
 

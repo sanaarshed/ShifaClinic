@@ -14,9 +14,11 @@ namespace ShifaClinic.Reports.Poco
     {
         public string RecieverFullname { get; set; }
         public double RecievedAmount { get; set; }
-        public string ConsultancyPercentage { get; set; }
         public string ConsultancyTotalVisits { get; set; }
         public string ConsultancyIncome { get; set; }
+        public string OpdTotalVisits { get; set; }
+        public string OpdIncome { get; set; }
+        ICollection<DataContext.Service> services { get; set; }
         public string MiscellaneousPercentage { get; set; }
         public string MiscellaneousIncome { get; set; }
         public string CreatedByFullname { get; set; }

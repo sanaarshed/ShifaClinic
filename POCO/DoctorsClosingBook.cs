@@ -10,7 +10,7 @@ namespace ShifaClinic.POCO
     {
 
         public string doctorName { get; set; }
-        public int paidAmount { get; set; }
-        public int totalAmount { get; set; }
+        public double paidAmount { get; set; }
+        public double totalAmount { get; set; }
     }
 }

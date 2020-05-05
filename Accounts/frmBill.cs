@@ -354,7 +354,7 @@ namespace ShifaClinic.Accounts
         private void bindServicesGrid()
         {
             POCO.BillDetail _temp = null;
-            int _id = 0;
+            //int _id = 0;
             if (cmbServices.SelectedIndex > 0)
             {
                 var billDetail = new POCO.BillDetail();
@@ -769,7 +769,6 @@ namespace ShifaClinic.Accounts
             if (e.KeyCode == Keys.Enter && !this.validateForm(true))
             {
                 int id = 0;
-                int amount = int.Parse(string.IsNullOrEmpty(txtPaidAmount.Text) ? "0" : txtPaidAmount.Text);
                 if (MessageBox.Show("Are you sure to save?", "SAVE?",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question) == DialogResult.Yes)
