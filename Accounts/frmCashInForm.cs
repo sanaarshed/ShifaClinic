@@ -1,21 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using ShifaClinic.Common;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ShifaClinic.DataContext;
 using ShifaClinic.Session;
+using ShifaClinic.Reports.Poco;
 
 namespace ShifaClinic.Accounts
 {
     public partial class frmCashInForm : Form
     {
         Auth auth = new Auth();
+        public bool validateForm()
+        {
+            if (txt5000.Text != "0" ||
+                txt1000.Text != "0" ||
+                txt500.Text != "0" ||
+                txt100.Text != "0" ||
+                txt50.Text != "0" ||
+                txt20.Text != "0" ||
+                txt10.Text != "0" ||
+                txt5.Text != "0" ||
+                txt2.Text != "0" ||
+                txt1.Text != "0"
+                )
+            {
+                return true;
+            }
+            else
+            {
+                MessageBox.Show("Add any amount",
+                   "ERROR",
+                   MessageBoxButtons.OK,
+                   MessageBoxIcon.Error);
+                return false;
+            }
+        }
         public void calculateTotal()
         {
             txtTotal.Text =
@@ -32,6 +51,25 @@ namespace ShifaClinic.Accounts
         }
         private void printReciept()
         {
+            var dscashIn = new dsCashIn();
+            dscashIn.createDate = DateTime.Now.ToString();
+            dscashIn.createdByName = auth.currentUser.fullName;
+            dscashIn.totalAmount = txtTotal.Text;
+            dscashIn.remarks = txtRemarks.Text;
+            dscashIn.Rs5000 = txt5000.Text;
+            dscashIn.Rs1000 = txt1000.Text;
+            dscashIn.Rs500 = txt500.Text;
+            dscashIn.Rs100 = txt100.Text;
+            dscashIn.Rs50 = txt50.Text;
+            dscashIn.Rs20 = txt20.Text;
+            dscashIn.Rs10 = txt10.Text;
+            dscashIn.Rs5 = txt5.Text;
+            dscashIn.Rs2 = txt2.Text;
+            dscashIn.Rs1 = txt1.Text;
+            var dtcashIn = Utility.MapToDataTable<Reports.Poco.dsCashIn>(dscashIn);
+            dtcashIn.TableName = "dsCashIn";
+            ReportPrint reportPrint = new ReportPrint();
+            reportPrint.Print(dtcashIn, "dsCashIn", "Voucher_CashIn.rdlc", "Accounts");
         }
         public void resetForm()
         {
@@ -54,7 +92,6 @@ namespace ShifaClinic.Accounts
         private void txtCash_TextChanged(object sender, EventArgs e)
         {
             calculateTotal();
-
         }
         private void txtCash_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -97,37 +134,49 @@ namespace ShifaClinic.Accounts
 
         private void btnSubmit_Click(object sender, EventArgs e)
         {
-            using (var db = new clinicDbContext())
+            if (validateForm())
             {
-                var cashIn = new CashIn();
-                cashIn.totalCashIn = Convert.ToInt32(txtTotal.Text);
-                cashIn.remarks = txtRemarks.Text;
-                cashIn.Rs5000 = Convert.ToInt32(txt5000.Text);
-                cashIn.Rs1000 = Convert.ToInt32(txt1000.Text);
-                cashIn.Rs500 = Convert.ToInt32(txt500.Text);
-                cashIn.Rs100 = Convert.ToInt32(txt100.Text);
-                cashIn.Rs50 = Convert.ToInt32(txt50.Text);
-                cashIn.Rs20 = Convert.ToInt32(txt20.Text);
-                cashIn.Rs10 = Convert.ToInt32(txt10.Text);
-                cashIn.Rs5 = Convert.ToInt32(txt5.Text);
-                cashIn.Rs2 = Convert.ToInt32(txt2.Text);
-                cashIn.Rs1 = Convert.ToInt32(txt1.Text);
-                cashIn.createDate = DateTime.Now;
-                cashIn.createdBy = auth.currentUser.id;
-                db.CashIns.Add(cashIn);
-
-                MessageBox.Show("Cash Added successfully...",
-                        "SUCCESSFUL",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Information);
-                if (MessageBox.Show("Do you want to generate voucher for this?",
-                     "QUESTION",
-                      MessageBoxButtons.YesNo,
-                      MessageBoxIcon.Question) == DialogResult.Yes)
+                using (var db = new clinicDbContext())
                 {
-                    printReciept();
+                    var cashIn = new CashIn();
+                    cashIn.totalCashIn = Convert.ToInt32(txtTotal.Text);
+                    cashIn.remarks = txtRemarks.Text;
+                    cashIn.Rs5000 = Convert.ToInt32(txt5000.Text);
+                    cashIn.Rs1000 = Convert.ToInt32(txt1000.Text);
+                    cashIn.Rs500 = Convert.ToInt32(txt500.Text);
+                    cashIn.Rs100 = Convert.ToInt32(txt100.Text);
+                    cashIn.Rs50 = Convert.ToInt32(txt50.Text);
+                    cashIn.Rs20 = Convert.ToInt32(txt20.Text);
+                    cashIn.Rs10 = Convert.ToInt32(txt10.Text);
+                    cashIn.Rs5 = Convert.ToInt32(txt5.Text);
+                    cashIn.Rs2 = Convert.ToInt32(txt2.Text);
+                    cashIn.Rs1 = Convert.ToInt32(txt1.Text);
+                    cashIn.createDate = DateTime.Now;
+                    cashIn.createdBy = auth.currentUser.id;
+                    db.CashIns.Add(cashIn);
+
+                    MessageBox.Show("Cash Added successfully...",
+                            "SUCCESSFUL",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Information);
+                    if (MessageBox.Show("Do you want to generate voucher for this?",
+                         "QUESTION",
+                          MessageBoxButtons.YesNo,
+                          MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        printReciept();
+                    }
+
+                    this.resetForm();
                 }
-                this.resetForm();
+            }
+        }
+
+        private void txtRemarks_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btnSubmit.Focus();
             }
         }
     }

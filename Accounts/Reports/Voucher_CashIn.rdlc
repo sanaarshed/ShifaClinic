@@ -9,7 +9,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>=": " &amp; First(Fields!CreatedDate.Value, "dsDailyDoctorBookClose")</Value>
+                <Value>=Fields!createDate.Value</Value>
                 <Style />
               </TextRun>
             </TextRuns>
@@ -81,7 +81,7 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.34038cm</Top>
+        <Top>1.62613cm</Top>
         <Left>0.73674cm</Left>
         <Height>0.6cm</Height>
         <Width>3.15495cm</Width>
@@ -96,77 +96,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Textbox Name="Textbox5">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value>Amount Received:</Value>
-                <Style>
-                  <FontSize>11pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>3.01168cm</Top>
-        <Left>0.73674cm</Left>
-        <Height>0.6cm</Height>
-        <Width>3.58367cm</Width>
-        <ZIndex>3</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
-      <Textbox Name="Textbox6">
-        <CanGrow>true</CanGrow>
-        <KeepTogether>true</KeepTogether>
-        <Paragraphs>
-          <Paragraph>
-            <TextRuns>
-              <TextRun>
-                <Value />
-                <Style>
-                  <FontSize>16pt</FontSize>
-                  <FontWeight>Bold</FontWeight>
-                </Style>
-              </TextRun>
-            </TextRuns>
-            <Style />
-          </Paragraph>
-        </Paragraphs>
-        <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>2.74012cm</Top>
-        <Left>4.57094cm</Left>
-        <Height>0.87157cm</Height>
-        <Width>9.75639cm</Width>
-        <ZIndex>4</ZIndex>
-        <Style>
-          <Border>
-            <Style>None</Style>
-          </Border>
-          <BottomBorder>
-            <Color>Black</Color>
-            <Style>Solid</Style>
-            <Width>1pt</Width>
-          </BottomBorder>
-          <PaddingLeft>2pt</PaddingLeft>
-          <PaddingRight>2pt</PaddingRight>
-          <PaddingTop>2pt</PaddingTop>
-          <PaddingBottom>2pt</PaddingBottom>
-        </Style>
-      </Textbox>
       <Textbox Name="Textbox7">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -174,7 +103,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value />
+                <Value>=Fields!createdByName.Value</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                   <FontWeight>Normal</FontWeight>
@@ -185,11 +114,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>1.34038cm</Top>
-        <Left>4.06807cm</Left>
+        <Top>1.65788cm</Top>
+        <Left>4.57094cm</Left>
         <Height>0.6cm</Height>
-        <Width>10.25926cm</Width>
-        <ZIndex>5</ZIndex>
+        <Width>9.75639cm</Width>
+        <ZIndex>3</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -227,7 +156,7 @@
         <Left>0.83199cm</Left>
         <Height>0.6cm</Height>
         <Width>2.24178cm</Width>
-        <ZIndex>6</ZIndex>
+        <ZIndex>4</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -243,7 +172,7 @@
         <Left>3.18585cm</Left>
         <Height>0cm</Height>
         <Width>11.1626cm</Width>
-        <ZIndex>7</ZIndex>
+        <ZIndex>5</ZIndex>
         <Style>
           <Border>
             <Style>Solid</Style>
@@ -257,7 +186,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value>Details (if any):</Value>
+                <Value>Details:</Value>
                 <Style>
                   <FontSize>11pt</FontSize>
                   <FontWeight>Bold</FontWeight>
@@ -268,11 +197,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>4.36453cm</Top>
+        <Top>3.22153cm</Top>
         <Left>0.73674cm</Left>
         <Height>0.6cm</Height>
         <Width>3.26769cm</Width>
-        <ZIndex>8</ZIndex>
+        <ZIndex>6</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -305,7 +234,7 @@
         <Left>10.61525cm</Left>
         <Height>0.45623cm</Height>
         <Width>3.80734cm</Width>
-        <ZIndex>9</ZIndex>
+        <ZIndex>7</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -316,18 +245,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="Line1">
-        <Top>1.95806in</Top>
-        <Left>5.65706in</Left>
-        <Height>0in</Height>
-        <Width>-5.36374in</Width>
-        <ZIndex>10</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Line>
       <Rectangle Name="Rectangle1">
         <ReportItems>
           <Textbox Name="Textbox27">
@@ -337,20 +254,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.5000</Value>
+                    <Value>Rs.5000:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.17708in</Top>
-            <Left>0.28578in</Left>
+            <Left>0.37328in</Left>
             <Height>0.25in</Height>
-            <Width>0.72091in</Width>
+            <Width>0.79388in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -368,20 +287,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.1000</Value>
+                    <Value>Rs.1000:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.51042in</Top>
-            <Left>0.28578in</Left>
+            <Left>0.37328in</Left>
             <Height>0.25in</Height>
-            <Width>0.72091in</Width>
+            <Width>0.79388in</Width>
             <ZIndex>1</ZIndex>
             <Style>
               <Border>
@@ -400,20 +321,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.500</Value>
+                    <Value>Rs.500:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84583in</Top>
-            <Left>0.28578in</Left>
+            <Left>0.37328in</Left>
             <Height>0.25in</Height>
-            <Width>0.72091in</Width>
+            <Width>0.79388in</Width>
             <ZIndex>2</ZIndex>
             <Style>
               <Border>
@@ -432,20 +355,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.100</Value>
+                    <Value>Rs.100:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>1.1625in</Top>
-            <Left>0.28578in</Left>
+            <Left>0.37328in</Left>
             <Height>0.25in</Height>
-            <Width>0.72091in</Width>
+            <Width>0.79388in</Width>
             <ZIndex>3</ZIndex>
             <Style>
               <Border>
@@ -464,18 +389,20 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.1</Value>
+                    <Value>Rs.1:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84583in</Top>
-            <Left>3.76796in</Left>
+            <Left>3.85546in</Left>
             <Height>0.25in</Height>
             <Width>0.52299in</Width>
             <ZIndex>4</ZIndex>
@@ -496,20 +423,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.50</Value>
+                    <Value>Rs.50:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
-            <Top>0.17708in</Top>
-            <Left>2.21802in</Left>
+            <Top>0.19098in</Top>
+            <Left>2.28469in</Left>
             <Height>0.25in</Height>
-            <Width>0.52299in</Width>
+            <Width>0.54382in</Width>
             <ZIndex>5</ZIndex>
             <Style>
               <Border>
@@ -528,20 +457,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.20</Value>
+                    <Value>Rs.20:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.51042in</Top>
-            <Left>2.21802in</Left>
+            <Left>2.28469in</Left>
             <Height>0.25in</Height>
-            <Width>0.52299in</Width>
+            <Width>0.54382in</Width>
             <ZIndex>6</ZIndex>
             <Style>
               <Border>
@@ -560,20 +491,22 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.10</Value>
+                    <Value>Rs.10:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84583in</Top>
-            <Left>2.21802in</Left>
+            <Left>2.28469in</Left>
             <Height>0.25in</Height>
-            <Width>0.52299in</Width>
+            <Width>0.54382in</Width>
             <ZIndex>7</ZIndex>
             <Style>
               <Border>
@@ -592,18 +525,20 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.5</Value>
+                    <Value>Rs.5:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.17708in</Top>
-            <Left>3.76796in</Left>
+            <Left>3.85546in</Left>
             <Height>0.25in</Height>
             <Width>0.52299in</Width>
             <ZIndex>8</ZIndex>
@@ -624,18 +559,20 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value>Rs.2</Value>
+                    <Value>Rs.2:</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
                   </TextRun>
                 </TextRuns>
-                <Style />
+                <Style>
+                  <TextAlign>Right</TextAlign>
+                </Style>
               </Paragraph>
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.5125in</Top>
-            <Left>3.76796in</Left>
+            <Left>3.85546in</Left>
             <Height>0.25in</Height>
             <Width>0.52299in</Width>
             <ZIndex>9</ZIndex>
@@ -656,7 +593,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs5000.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -667,9 +604,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.17708in</Top>
-            <Left>1.1491in</Left>
+            <Left>1.2366in</Left>
             <Height>0.25in</Height>
-            <Width>0.55424in</Width>
+            <Width>0.63757in</Width>
             <ZIndex>10</ZIndex>
             <Style>
               <Border>
@@ -688,7 +625,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs1000.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -699,9 +636,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.51042in</Top>
-            <Left>1.1491in</Left>
+            <Left>1.2366in</Left>
             <Height>0.25in</Height>
-            <Width>0.55424in</Width>
+            <Width>0.63757in</Width>
             <ZIndex>11</ZIndex>
             <Style>
               <Border>
@@ -720,7 +657,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs500.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -731,9 +668,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84583in</Top>
-            <Left>1.14911in</Left>
+            <Left>1.23661in</Left>
             <Height>0.25in</Height>
-            <Width>0.55424in</Width>
+            <Width>0.63757in</Width>
             <ZIndex>12</ZIndex>
             <Style>
               <Border>
@@ -752,7 +689,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs100.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -763,9 +700,9 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>1.1625in</Top>
-            <Left>1.1491in</Left>
+            <Left>1.2366in</Left>
             <Height>0.25in</Height>
-            <Width>0.55424in</Width>
+            <Width>0.63757in</Width>
             <ZIndex>13</ZIndex>
             <Style>
               <Border>
@@ -784,7 +721,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs1.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -795,7 +732,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84584in</Top>
-            <Left>4.38129in</Left>
+            <Left>4.46879in</Left>
             <Height>0.25in</Height>
             <Width>0.55424in</Width>
             <ZIndex>14</ZIndex>
@@ -816,7 +753,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs50.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -827,7 +764,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.17708in</Top>
-            <Left>2.83134in</Left>
+            <Left>2.91884in</Left>
             <Height>0.25in</Height>
             <Width>0.5447in</Width>
             <ZIndex>15</ZIndex>
@@ -848,7 +785,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs20.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -859,7 +796,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.51042in</Top>
-            <Left>2.83134in</Left>
+            <Left>2.91884in</Left>
             <Height>0.25in</Height>
             <Width>0.5447in</Width>
             <ZIndex>16</ZIndex>
@@ -880,7 +817,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs10.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -891,7 +828,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.84583in</Top>
-            <Left>2.83134in</Left>
+            <Left>2.91884in</Left>
             <Height>0.25in</Height>
             <Width>0.5447in</Width>
             <ZIndex>17</ZIndex>
@@ -912,7 +849,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs5.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -923,7 +860,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.17708in</Top>
-            <Left>4.38128in</Left>
+            <Left>4.46878in</Left>
             <Height>0.25in</Height>
             <Width>0.5447in</Width>
             <ZIndex>18</ZIndex>
@@ -944,7 +881,7 @@
               <Paragraph>
                 <TextRuns>
                   <TextRun>
-                    <Value />
+                    <Value>=Fields!Rs2.Value</Value>
                     <Style>
                       <FontSize>12pt</FontSize>
                     </Style>
@@ -955,7 +892,7 @@
             </Paragraphs>
             <rd:DefaultName>Textbox27</rd:DefaultName>
             <Top>0.5125in</Top>
-            <Left>4.38128in</Left>
+            <Left>4.46878in</Left>
             <Height>0.25in</Height>
             <Width>0.5447in</Width>
             <ZIndex>19</ZIndex>
@@ -971,15 +908,27 @@
           </Textbox>
         </ReportItems>
         <KeepTogether>true</KeepTogether>
-        <Top>2.155in</Top>
+        <Top>1.53in</Top>
         <Left>0.27547in</Left>
         <Height>1.6375in</Height>
         <Width>5.36313in</Width>
-        <ZIndex>11</ZIndex>
+        <ZIndex>8</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
           </Border>
+          <TopBorder>
+            <Style>Solid</Style>
+          </TopBorder>
+          <BottomBorder>
+            <Style>Solid</Style>
+          </BottomBorder>
+          <LeftBorder>
+            <Style>Solid</Style>
+          </LeftBorder>
+          <RightBorder>
+            <Style>Solid</Style>
+          </RightBorder>
         </Style>
       </Rectangle>
       <Textbox Name="Textbox18">
@@ -1000,11 +949,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox3</rd:DefaultName>
-        <Top>9.98926cm</Top>
+        <Top>8.65576cm</Top>
         <Left>0.6997cm</Left>
         <Height>0.6cm</Height>
         <Width>3.36483cm</Width>
-        <ZIndex>12</ZIndex>
+        <ZIndex>9</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1015,18 +964,6 @@
           <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
-      <Line Name="Line2">
-        <Top>4.17252in</Top>
-        <Left>5.70171in</Left>
-        <Height>0in</Height>
-        <Width>-5.42624in</Width>
-        <ZIndex>13</ZIndex>
-        <Style>
-          <Border>
-            <Style>Solid</Style>
-          </Border>
-        </Style>
-      </Line>
       <Textbox Name="Textbox48">
         <CanGrow>true</CanGrow>
         <KeepTogether>true</KeepTogether>
@@ -1034,7 +971,7 @@
           <Paragraph>
             <TextRuns>
               <TextRun>
-                <Value />
+                <Value>=Fields!remarks.Value</Value>
                 <Style>
                   <FontSize>12pt</FontSize>
                 </Style>
@@ -1044,11 +981,11 @@
           </Paragraph>
         </Paragraphs>
         <rd:DefaultName>Textbox27</rd:DefaultName>
-        <Top>4.30446in</Top>
-        <Left>0.27547in</Left>
+        <Top>3.67946in</Top>
+        <Left>0.32756in</Left>
         <Height>1.12345in</Height>
-        <Width>5.38158in</Width>
-        <ZIndex>14</ZIndex>
+        <Width>5.2045in</Width>
+        <ZIndex>10</ZIndex>
         <Style>
           <Border>
             <Style>None</Style>
@@ -1069,6 +1006,81 @@
             <Style>Solid</Style>
             <Width>1pt</Width>
           </RightBorder>
+          <PaddingLeft>5pt</PaddingLeft>
+          <PaddingRight>5pt</PaddingRight>
+          <PaddingTop>5pt</PaddingTop>
+          <PaddingBottom>5pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox5">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Amount Received:</Value>
+                <Style>
+                  <FontSize>11pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>12.48815cm</Top>
+        <Left>0.76661cm</Left>
+        <Height>0.6cm</Height>
+        <Width>3.58367cm</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+      <Textbox Name="Textbox6">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>=Fields!totalAmount.Value</Value>
+                <Style>
+                  <FontSize>16pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox3</rd:DefaultName>
+        <Top>12.34359cm</Top>
+        <Left>4.60081cm</Left>
+        <Height>0.87157cm</Height>
+        <Width>9.75639cm</Width>
+        <ZIndex>12</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <BottomBorder>
+            <Color>Black</Color>
+            <Style>Solid</Style>
+            <Width>1pt</Width>
+          </BottomBorder>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
         </Style>
       </Textbox>
     </ReportItems>
@@ -1252,14 +1264,7 @@
             <Paragraph>
               <TextRuns>
                 <TextRun>
-                  <Value>:</Value>
-                  <Style>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                  </Style>
-                </TextRun>
-                <TextRun>
-                  <Value>=First(Fields!CreatedByFullname.Value, "dsDailyDoctorBookClose")</Value>
+                  <Value>=Fields!createdByName.Value</Value>
                   <Style>
                     <FontSize>9pt</FontSize>
                     <FontWeight>Normal</FontWeight>
@@ -1296,14 +1301,6 @@
           <Paragraphs>
             <Paragraph>
               <TextRuns>
-                <TextRun>
-                  <Value>: </Value>
-                  <Style>
-                    <FontSize>9pt</FontSize>
-                    <FontWeight>Normal</FontWeight>
-                    <Format>dddd, dd MMMM yyyy - hh:mm:ss tt</Format>
-                  </Style>
-                </TextRun>
                 <TextRun>
                   <Value>=Globals!ExecutionTime</Value>
                   <Style>
@@ -1444,6 +1441,86 @@
     <Style />
   </Page>
   <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="ShifaClinicReportsPoco">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString>/* Local Connection */</ConnectString>
+      </ConnectionProperties>
+      <rd:DataSourceID>6521c88a-1be3-4e1b-934d-3c5aba366296</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="dsCashIn">
+      <Query>
+        <DataSourceName>ShifaClinicReportsPoco</DataSourceName>
+        <CommandText>/* Local Query */</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="createDate">
+          <DataField>createDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="createdByName">
+          <DataField>createdByName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="remarks">
+          <DataField>remarks</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs1">
+          <DataField>Rs1</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs10">
+          <DataField>Rs10</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs100">
+          <DataField>Rs100</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs1000">
+          <DataField>Rs1000</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs2">
+          <DataField>Rs2</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs20">
+          <DataField>Rs20</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs5">
+          <DataField>Rs5</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs50">
+          <DataField>Rs50</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs500">
+          <DataField>Rs500</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Rs5000">
+          <DataField>Rs5000</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="totalAmount">
+          <DataField>totalAmount</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <rd:DataSetInfo>
+        <rd:DataSetName>ShifaClinic.Reports.Poco</rd:DataSetName>
+        <rd:TableName>dsCashIn</rd:TableName>
+        <rd:ObjectDataSourceType>ShifaClinic.Reports.Poco.dsCashIn, ShifaClinic, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null</rd:ObjectDataSourceType>
+      </rd:DataSetInfo>
+    </DataSet>
+  </DataSets>
   <EmbeddedImages>
     <EmbeddedImage Name="shifa_opd_logo_200x200_engcopy">
       <MIMEType>image/png</MIMEType>
