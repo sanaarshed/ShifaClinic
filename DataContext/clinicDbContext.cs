@@ -12,14 +12,15 @@ namespace ShifaClinic.DataContext
         {
         }
 
+        public virtual DbSet<CashIn> CashIns { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<BillDetail> BillDetails { get; set; }
         public virtual DbSet<BillProcedureDetail> BillProcedureDetails { get; set; }
         public virtual DbSet<BillProcedure> BillProcedures { get; set; }
         public virtual DbSet<Designation> Designations { get; set; }
         public virtual DbSet<DoctorBookClosing> DoctorBookClosings { get; set; }
+        public virtual DbSet<DoctorBookClosingDetail> DoctorBookClosingDetails { get; set; }
         public virtual DbSet<DoctorDepartment> DoctorDepartments { get; set; }
-        public virtual DbSet<PrinterInfo> PrinterInfoes { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
         public virtual DbSet<DoctorShareConfiguration> DoctorShareConfigurations { get; set; }
         public virtual DbSet<DoctorShareConfigurationHistory> DoctorShareConfigurationHistories { get; set; }
@@ -39,6 +40,7 @@ namespace ShifaClinic.DataContext
         public virtual DbSet<Token> Tokens { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
+        public virtual DbSet<PrinterInfo> PrinterInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -76,11 +78,6 @@ namespace ShifaClinic.DataContext
                 .HasMany(e => e.BillProcedureDetails)
                 .WithRequired(e => e.Doctor)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Doctor>()
-                .HasMany(e => e.DoctorBookClosings)
-                .WithOptional(e => e.Doctor)
-                .HasForeignKey(e => e.docId);
 
             modelBuilder.Entity<Doctor>()
                 .HasMany(e => e.DoctorShareConfigurations)
@@ -161,6 +158,11 @@ namespace ShifaClinic.DataContext
 
             modelBuilder.Entity<Service>()
                 .HasMany(e => e.BillDetails)
+                .WithRequired(e => e.Service)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Service>()
+                .HasMany(e => e.DoctorBookClosingDetails)
                 .WithRequired(e => e.Service)
                 .WillCascadeOnDelete(false);
 

@@ -21,7 +21,7 @@ namespace ShifaClinic
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Accounts.frmDrClosingBookForm());
+            //Application.Run(new Accounts.frmDrClosingBookForm());
             //Application.Run(new Session.frmDashboardForm());
             //Application.Run(new frmPatientInvoiceForm());
             //Application.Run(new frmEntryForm());
@@ -33,6 +33,8 @@ namespace ShifaClinic
             //Application.Run(new Accounts.frmProcedureBill());
             //Application.Run(new Accounts.frmReturnProcedures());
             //Application.Run(new Doctors.frmDoctor());
+            //Application.Run(new frmSettingsForm());
+            Application.Run(new Accounts.frmCashInForm());
         }
     }
 }

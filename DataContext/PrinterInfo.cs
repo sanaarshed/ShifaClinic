@@ -9,6 +9,7 @@ namespace ShifaClinic.DataContext
     [Table("PrinterInfo")]
     public partial class PrinterInfo
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int id { get; set; }
 
         [StringLength(50)]

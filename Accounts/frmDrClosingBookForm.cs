@@ -7,6 +7,7 @@ using ShifaClinic.POCO;
 using ShifaClinic.Session;
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Entity;
@@ -16,6 +17,7 @@ using System.Dynamic;
 using System.IdentityModel.Protocols.WSTrust;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -32,23 +34,6 @@ namespace ShifaClinic.Accounts
             OPDVISIT = 1,
             CONSULTANTVISIT = 2,
             OTHERS
-        }
-        private void applyToAll(Control groupBox)
-        {
-            foreach (var c in groupBox.Controls)
-            {
-                if (c.GetType() == typeof(TextBox))
-                {
-                    var ctrl = (TextBox)c;
-                    ctrl.GotFocus += Ctrl_GotFocus;
-                }
-            }
-        }
-        private void Ctrl_GotFocus(object sender, EventArgs e)
-        {
-            var ctrl = sender as TextBox;
-            ctrl.BackColor = Color.Beige;
-            ctrl.SelectAll();
         }
         public bool validateForm(bool DisplayMessageBox = false)
         {
@@ -103,15 +88,14 @@ namespace ShifaClinic.Accounts
         }
         private void generateInvoice()
         {
-
             using (var db = new clinicDbContext())
             {
                 var _comboboxitem = cmbDoctor.SelectedItem as ComboBoxItem;
                 int id = Convert.ToInt32(_comboboxitem.Value);
-                if (db.DoctorBookClosings.Where(a => a.docId == id && a.paidAmount == null).FirstOrDefault() == null)
+                if (db.DoctorBookClosings.Where(a => a.doctorId == id && a.paidAmount == null).FirstOrDefault() == null)
                 {
                     var docClosing = new DoctorBookClosing();
-                    docClosing.docId = id;
+                    docClosing.doctorId = id;
                     docClosing.paidAmount = Convert.ToDouble(txtAmountPaid.Text);
                     docClosing.balance = Convert.ToInt32(lblBalance.Text);
                     docClosing.total = Convert.ToDouble(lblTotal.Text);
@@ -119,6 +103,19 @@ namespace ShifaClinic.Accounts
                     docClosing.createdBy = auth.currentUser.id;
                     db.DoctorBookClosings.Add(docClosing);
                     db.SaveChanges();
+                    foreach (DataGridViewRow row in dgvFinancialDetails.Rows)
+                    {
+                        DoctorBookClosingDetail bookclosingDetail = new DoctorBookClosingDetail();
+                        bookclosingDetail.drBookClosingId = docClosing.id;
+                        
+                        bookclosingDetail.serviceId = Convert.ToInt32(row.Cells["ServiceId"].Value);
+                        bookclosingDetail.sharePercentage = Convert.ToDouble(row.Cells["Percentage"].Value);
+                        bookclosingDetail.totalPrice = Convert.ToDouble(row.Cells["Total"].Value);
+                        bookclosingDetail.visits = Convert.ToInt32(row.Cells["VisitCounts"].Value);
+                        bookclosingDetail.procedureId = Convert.ToInt32(row.Cells["procedureId"].Value);
+                        db.DoctorBookClosingDetails.Add(bookclosingDetail);
+                        db.SaveChanges();
+                    }
                     MessageBox.Show("Invoice generated successfully...",
                         "SUCCESSFUL",
                         MessageBoxButtons.OK,
@@ -128,65 +125,67 @@ namespace ShifaClinic.Accounts
                           MessageBoxButtons.YesNo,
                           MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        printReciept();
+                        printReciept(false);
                     }
-
+                    this.bindDoctorsPaidList();
                     this.resetForm();
                 }
             }
         }
-        private void printReciept()
+        private void printReciept(bool isCopy)
         {
-            foreach (DataGridViewRow row in dgvFinancialDetails.Rows)
+            using (var db = new clinicDbContext())
             {
-                MessageBox.Show(row.Cells["title"].Value.ToString());
+                //Doctor Book Closing
+                var dsDrBookClosing = new Reports.Poco.dsDailyDoctorBookClose();
+                dsDrBookClosing.RecieverFullname = hdnDoctorName.Text;
+                dsDrBookClosing.RecievedAmount = string.Format("{0:0.00}", txtAmountPaid.Text);
+                dsDrBookClosing.CreatedDate = string.Format("{0:dd-MMM-yyy}", DateTime.Now);
+                dsDrBookClosing.CreatedByFullname = auth.currentUser.fullName;
+
+                //Doctor Book Closing Details
+                List<ShifaClinic.Reports.Poco.dsDrBookCloseDetails> dsDrBookClosingDetails =
+                    new List<Reports.Poco.dsDrBookCloseDetails>();
+                foreach (DataGridViewRow row in dgvFinancialDetails.Rows)
+                {
+                    var bookCloseDetail = new Reports.Poco.dsDrBookCloseDetails();
+                    bookCloseDetail.title = row.Cells["type"].Value.ToString();
+                    bookCloseDetail.visits = row.Cells["VisitCounts"].Value.ToString();
+                    bookCloseDetail.price = string.Format("{0:0.00}", row.Cells["total"].Value);
+                    dsDrBookClosingDetails.Add(bookCloseDetail);
+                }
+
+
+                var dtDrBookClose = Common.Utility.MapToDataTable<Reports.Poco.dsDailyDoctorBookClose>(dsDrBookClosing);
+                dtDrBookClose.TableName = "dsDailyDoctorBookClose";
+
+                var dtDrBookCloseDetails = dsDrBookClosingDetails.ToDataTable();
+                dtDrBookCloseDetails.TableName = "dsDrBookCloseDetails";
+
+                List<DataTable> dataSources = new List<DataTable>();
+                dataSources.Add(dtDrBookClose);
+                dataSources.Add(dtDrBookCloseDetails);
+
+
+                Common.ReportPrint reportPrint = new Common.ReportPrint();
+                ReportParameter rp = new ReportParameter();
+                if (isCopy)
+                {
+                    List<ReportParameter> listRP = new List<ReportParameter>();
+                    listRP.Add(new ReportParameter("isCopy", "(COPY)"));
+                    reportPrint.ReportParameters = listRP;
+                }
+                reportPrint.Print(dataSources, "voucher_DailyDoctorBookClose.rdlc", "Accounts");
             }
-            List<string> _services = new List<string>();
-            var reportSource = new ShifaClinic.Reports.Poco.dsDailyDoctorBookClose()
-            {
-                RecieverFullname = cmbDoctor.Text.Trim(),
-                RecievedAmount = Convert.ToDouble(txtAmountPaid.Text.Trim()),
-                ConsultancyTotalVisits = "",
-                ConsultancyIncome = "",
-                MiscellaneousIncome = "0",
-                MiscellaneousPercentage = "0",
-                CreatedByFullname = auth.currentUser.ToString(),
-                CreatedDate = DateTime.Now
-            };
-            var dtDrBookClose = Common.Utility.MapToDataTable<Reports.Poco.dsDailyDoctorBookClose>(reportSource);
-            Common.ReportPrint report = new Common.ReportPrint();
-            report.Print(dtDrBookClose, "dsReturnOPD", "voucher_ReturnOPD2.rdlc", "Accounts");
-
-
-            //    string reportName = "voucher_DailyDoctorBookClose.rdlc";
-            //    var dtValue = new DataTable();
-            //    dtValue = Utility.MapToDataTable<Reports.Poco.dsDailyDoctorBookClose>(reportSource);
-
-            //    string p = Path.GetDirectoryName(Application.ExecutablePath);
-            //    string path = p.Remove(p.Length - 10) + "\\Patient\\reports\\" + reportName;
-            //    LocalReport report = new LocalReport();
-            //    report.ReportPath = path;
-
-            //    ReportDataSource ds = new ReportDataSource();
-            //    ds.Name = "dsDailyDoctorBookClose";
-            //    ds.Value = dtValue;
-            //    report.DataSources.Add(ds);
-
-            //    //report.PrintToPrinter();
-            //    var print = new ReportPrint();
-            //    print.PrintToPrinter(report);
         }
+
         private void resetForm()
         {
             cmbDoctor.SelectedIndex = 0;
+            lblTotal.Text = "0";
             txtAmountPaid.Text = "0";
-            //lblSharePercentage.Text = "0";
-            //lblTotal.Text = "0";
-            //lblDrFee.Text = "0";
-            //lblBalance.Text = "0";
-            //lblVisits.Text = "0";
-            //lblTotalIncome.Text = "0";
-            //lblAmount.Text = "0";
+            dgvFinancialDetails.Rows.Clear();
+            lblDrId.Text = "0";
         }
 
         private void bindDoctorCombobox()
@@ -194,74 +193,54 @@ namespace ShifaClinic.Accounts
             using (var db = new clinicDbContext())
             {
                 this.cmbDoctor.Items.Insert(0, new ComboBoxItem(0, "--Select Doctor--"));
+
+                var drDialyBookClose = db.DoctorBookClosings.Where(p => DbFunctions.TruncateTime(p.createDate)
+                == DbFunctions.TruncateTime(DateTime.Now))
+                    .Select(a => a.doctorId).ToList();
                 var doctors = db.Doctors.ToList();
-                var drDialyBookClose = db.DoctorBookClosings.Where(p=> p.createDate == DateTime.Now).ToList() ;
-                //doctors.j
-                foreach (var _n in doctors)
+                foreach (var dr in doctors)
                 {
-                    var name = string.Format("{0} ({1})", _n.name.Trim(), _n.DoctorDepartment.title.Trim());
-                    var _item = new ComboBoxItem(_n.id, name);
-                    cmbDoctor.Items.Add(_item);
+                    if (!drDialyBookClose.Contains(dr.id))
+                    {
+                        var name = string.Format("{0} ({1})", dr.name.Trim(), dr.DoctorDepartment.title.Trim());
+                        var _item = new ComboBoxItem(dr.id, name);
+                        cmbDoctor.Items.Add(_item);
+                    }
                 }
                 cmbDoctor.DisplayMember = "Text";
                 cmbDoctor.ValueMember = "Value";
             }
         }
-        private void bindDoctorsList()
+        private void bindDoctorsPaidList()
         {
+            dgvDoctorsPaid.Rows.Clear();
             using (var db = new clinicDbContext())
             {
                 var doctorsPaid = db.DoctorBookClosings
                     .Where(p => DbFunctions.TruncateTime(p.createDate) == DbFunctions.TruncateTime(DateTime.Now))
                     .ToList();
 
-                List<POCO.DoctorsClosingBook> _doctorsList = new
+                List<POCO.DoctorsClosingBook> drBookClosingList = new
                 List<POCO.DoctorsClosingBook>();
                 foreach (var _d in doctorsPaid)
                 {
-                    var _i = new POCO.DoctorsClosingBook();
-                    _i.doctorName = _d.Doctor.name;
-                    _i.totalAmount = _d.total.Value;
-                    _i.paidAmount = _d.paidAmount.Value;
-
-                    _doctorsList.Add(_i);
+                    dgvDoctorsPaid.Rows.Add(_d.id,
+                        _d.Doctor.name,
+                        _d.paidAmount,
+                        _d.total
+                        );
                 }
-                dgvDoctorsPaid.DataSource = _doctorsList;
-
-
-                var doctorsNotPaid = db.BillDetails
-                    .Where(p =>
-                    DbFunctions.TruncateTime(p.Bill.createDate) == DbFunctions.TruncateTime(DateTime.Now))
-                    .ToList();
-
-                List<string> drNames = new
-                List<string>();
-                foreach (var _d in doctorsNotPaid)
-                {
-                    var doctorName = "";
-                    if (doctorsPaid.Where(p => p.docId == _d.doctorId).FirstOrDefault() == null)
-                    {
-                        if (drNames.Contains(_d.Doctor.name) == false)
-                            doctorName = _d.Doctor.name;
-                        drNames.Add(doctorName);
-                    }
-                }
-                dgvDoctorsNotPaid.DataSource = drNames.Select(x => new { Value = x }).ToList();
             }
         }
 
+        /**********************************************/
         public frmDrClosingBookForm()
         {
             InitializeComponent();
         }
         private void frmClosingBookForm_Load(object sender, EventArgs e)
         {
-            lblTodaysDate.Text = DateTime.Now.ToString();
-            this.applyToAll(this);
-
-            dgvFinancialDetails.Columns["Fees"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dgvFinancialDetails.Columns["Fees"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-
+            lblTodaysDate.Text = DateTime.Now.ToShortDateString();
             dgvFinancialDetails.Columns["Percentage"].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleRight;
             dgvFinancialDetails.Columns["Percentage"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
@@ -272,24 +251,31 @@ namespace ShifaClinic.Accounts
             dgvFinancialDetails.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
 
             // TODO: This line of code loads data into the 'clinicDbDataSet.Users' table. You can move, or remove it, as needed.
-            bindDoctorsList();
+            bindDoctorsPaidList();
             bindDoctorCombobox();
             cmbDoctor.SelectedIndex = 0;
         }
 
         private void cmbDoctor_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnPrint.Enabled = false;
+            gbDetails.Enabled = true;
+            btnSubmit.Enabled = true;
             lblTotal.Text = "0.00";
+            txtAmountPaid.Text = "0";
+
             using (var db = new clinicDbContext())
             {
                 dgvFinancialDetails.Rows.Clear();
                 var item = cmbDoctor.SelectedItem as ComboBoxItem;
                 int doctorId = Convert.ToInt32(item.Value);
+                lblDrId.Text = doctorId.ToString();
+
                 if (doctorId > 0)
                 {
                     //check if dr book is already closed or not 
                     var doctorBookClosing = db.DoctorBookClosings
-                        .Where(p => p.docId == doctorId &&
+                        .Where(p => p.doctorId == doctorId &&
                                 DbFunctions.TruncateTime(p.createDate) == DbFunctions.TruncateTime(DateTime.Now))
                           .FirstOrDefault();
                     if (doctorBookClosing is null)
@@ -297,55 +283,61 @@ namespace ShifaClinic.Accounts
                         // Book not yet closed for this doctor.
                         var docRecord = db.Doctors.Where(a => a.id == doctorId).FirstOrDefault();
                         var docShareConfig = db.DoctorShareConfigurations
-                            .Include("Service")
-                            .Include("Doctor")
+                            .Include(p => p.Service)
+                            .Include(p => p.Doctor)
+                            .Include(p => p.Procedure)
                             .Where(a => a.doctorId == doctorId).ToList();
+                        double sum = 0.0;
+                        int visits = 0;
+                        var title = "";
                         foreach (var share in docShareConfig)
                         {
-                            // Doctor ID - Service ID ///Procedure ID
                             if (share.serviceId.HasValue)
                             {
-                                var billDetails = db.BillDetails.Where(p =>
+                                var billDetails = db.BillDetails
+                                    .Where(p =>
                                         p.doctorId == doctorId &&
                                         p.serviceId == share.serviceId &&
                                         p.isReturnFiled == false &&
                                         DbFunctions.TruncateTime(p.Bill.createDate) == DbFunctions.TruncateTime(DateTime.Now))
                                     .ToList();
-
-                                double sum = billDetails.Sum(p => p.amount);
-                                dgvFinancialDetails.Rows.Add(
-                                    share.Service.title.Trim(),
-                                    billDetails.Count,
-                                    string.Format("{0:0.00}", sum * (share.percentage * 0.01))
-                                );
+                                sum = billDetails.Sum(p => p.amount);
+                                visits = billDetails.Count;
+                                title = share.Service.title;
                             }
-                            calculateTotal();
+                            else if (share.procedureId.HasValue)
+                            {
+                                var billDetails = db.BillProcedureDetails
+                                    .Where(p =>
+                                        p.procedureId == share.procedureId &&
+                                        p.doctorId == share.doctorId &&
+                                        p.isReturnFiled == false &&
+                                        DbFunctions.TruncateTime(p.BillProcedure.createDate) == DbFunctions.TruncateTime(DateTime.Now))
+                                    .ToList();
+                                sum = billDetails.Sum(p => p.amount);
+                                visits = billDetails.Count;
+                                title = share.Procedure.title;
+                            }
+
+                            int rowIndex = dgvFinancialDetails.Rows.Add(
+                                    title,
+                                    visits,
+                                    string.Format("{0:0.00}", sum * (share.percentage * 0.01)),
+                                    share.percentage
+                                );
+
+                            if (share.serviceId.HasValue)
+                            {
+                                dgvFinancialDetails.Rows[rowIndex].Cells["serviceId"].Value = share.serviceId;
+                            }
+                            else if (share.procedureId.HasValue)
+                            {
+                                dgvFinancialDetails.Rows[rowIndex].Cells["procedureId"].Value = share.procedureId;
+                            }
                         }
-                        return;
+                        calculateTotal();
                     }
                 }
-            }
-        }
-
-        private void txtAmountPaid_TextChanged(object sender, EventArgs e)
-        {
-            if (!string.IsNullOrEmpty(txtAmountPaid.Text))
-            {
-                //var a = int.Parse(lblAmount.Text.ToString()) - int.Parse(txtAmountPaid.Text.ToString());
-                //lblBalance.Text = a.ToString();
-            }
-        }
-
-        private void txtAmountPaid_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            Utility.onlyAllowNumericValue(sender, e);
-        }
-
-        private void txtAmountPaid_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter && !this.validateForm(true))
-            {
-                generateInvoice();
             }
         }
 
@@ -353,21 +345,82 @@ namespace ShifaClinic.Accounts
         {
             foreach (DataGridViewRow row in dgvDoctorsPaid.Rows)
             {
-                if (int.Parse(row.Cells[1].Value.ToString()) > 0)
+                if (Convert.ToInt32(row.Cells["DoctorId"].Value.ToString()) > 0)
                 {
-                    row.DefaultCellStyle.BackColor = Color.LimeGreen;
+                    row.DefaultCellStyle.BackColor = Color.LightGreen;
                 }
             }
+        }
+
+        private void txtAmountPaid_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            Utility.onlyAllowNumericValue(sender, e);
+        }
+        private void txtAmountPaid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter && !this.validateForm(true))
+            {
+                generateInvoice();
+            }
+        }
+        private void cmbDoctor_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                txtAmountPaid.Focus();
+            }
+        }
+
+        private void dgvDoctorsPaid_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            dgvFinancialDetails.Rows.Clear();
+            using (var db = new clinicDbContext())
+            {
+                if (dgvDoctorsPaid.Rows[e.RowIndex].Cells["Id"].Value != null)
+                {
+                    int drBookClosingId = Convert.ToInt32(dgvDoctorsPaid.Rows[e.RowIndex].Cells["Id"].Value);
+                    hdnDoctorName.Text = dgvDoctorsPaid.Rows[e.RowIndex].Cells["DoctorName"].Value.ToString();
+                    lblTotal.Text = string.Format("{0:0.00}", dgvDoctorsPaid.Rows[e.RowIndex].Cells["totalAmount"].Value);
+                    txtAmountPaid.Text = string.Format("{0:0.00}", dgvDoctorsPaid.Rows[e.RowIndex].Cells["paidAmount"].Value);
+
+                    foreach (var _d in db.DoctorBookClosingDetails
+                        .Include("Service")
+                        .Where(p => p.drBookClosingId == drBookClosingId)
+                        .ToList())
+                    {
+                        dgvFinancialDetails.Rows.Add(
+                                        _d.Service.title,
+                                        _d.visits,
+                                        string.Format("{0:0.00}", _d.totalPrice));
+                    }
+                }
+            }
+
+            btnPrint.Enabled = true;
+            gbDetails.Enabled = false;
+            btnSubmit.Enabled = false;
         }
         private void btnSubmit_Click(object sender, EventArgs e)
         {
             if (!this.validateForm(true))
                 this.generateInvoice();
+            this.bindDoctorCombobox();
+        }
+        private void txtAmountPaid_Click(object sender, EventArgs e)
+        {
+            txtAmountPaid.SelectAll();
         }
         private void btnCancel_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+        private void btnNew_Click(object sender, EventArgs e)
+        {
             this.resetForm();
         }
-       
+        private void btnPrint_Click(object sender, EventArgs e)
+        {
+            printReciept(true);
+        }
     }
 }

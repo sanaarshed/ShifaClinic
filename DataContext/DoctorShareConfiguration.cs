@@ -27,6 +27,8 @@ namespace ShifaClinic.DataContext
 
         public int? modifiedBy { get; set; }
 
+        public virtual Procedure Procedure { get; set; }
+
         public virtual Doctor Doctor { get; set; }
 
         public virtual Service Service { get; set; }

@@ -16,11 +16,16 @@ namespace ShifaClinic.Common
     {
         private List<Stream> m_streams;
         private int m_currentPageIndex = 0;
+        public List<ReportParameter> ReportParameters { get; set; }
         public ReportPrint()
-        { }
+        {
+            this.ReportParameters = new List<ReportParameter>();
+        }
 
         public void PrintToPrinter(LocalReport report)
         {
+            if (ReportParameters.Count > 0)
+                report.SetParameters(ReportParameters);
             Export(report);
         }
 
@@ -74,7 +79,7 @@ namespace ShifaClinic.Common
             PrintDocument printDoc = new PrintDocument();
             printDoc.PrinterSettings.MaximumPage = 1;
             printDoc.DefaultPageSettings.Landscape = reportPageSettings.IsLandscape;
-            
+
             if (reportPageSettings.IsLandscape)
             {
                 printDoc.DefaultPageSettings.PaperSize = new PaperSize("9 X 6",
@@ -83,12 +88,13 @@ namespace ShifaClinic.Common
             }
             else
             {
-            printDoc.DefaultPageSettings.PaperSize = reportPageSettings.PaperSize;
+                printDoc.DefaultPageSettings.PaperSize = reportPageSettings.PaperSize;
             }
+
             printDoc.DefaultPageSettings.Margins = reportPageSettings.Margins;
-            using (var db = new ShifaClinic.DataContext.clinicDbContext()) {
-                printDoc.PrinterSettings.PrinterName = db.PrinterInfoes.Where(p => p.id == 1).FirstOrDefault().name; ;
-            }
+            using (var db = new ShifaClinic.DataContext.clinicDbContext())
+            { printDoc.PrinterSettings.PrinterName = db.PrinterInfoes.Where(p => p.id == 1).FirstOrDefault().name; }
+
             if (!printDoc.PrinterSettings.IsValid)
             {
                 throw new Exception("Error: cannot find the default printer.");
@@ -150,6 +156,24 @@ namespace ShifaClinic.Common
             ds.Name = DatasetName;
             ds.Value = DataSource;
             report.DataSources.Add(ds);
+
+            this.PrintToPrinter(report);
+        }
+
+        public void Print(List<System.Data.DataTable> DataSource, string ReportFileName, string FolderName)
+        {
+            string p = Path.GetDirectoryName(Application.ExecutablePath);
+            string path = p.Remove(p.Length - 10) + "\\" + FolderName + "\\Reports\\" + ReportFileName;
+            LocalReport report = new LocalReport();
+            report.ReportPath = path;
+
+            foreach (var d in DataSource)
+            {
+                ReportDataSource ds = new ReportDataSource();
+                ds.Name = d.TableName;
+                ds.Value = d;
+                report.DataSources.Add(ds);
+            }
 
             this.PrintToPrinter(report);
         }

@@ -42,7 +42,7 @@ namespace ShifaClinic
             txtPrinterName.Text = printDialog.PrinterSettings.PrinterName;
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }

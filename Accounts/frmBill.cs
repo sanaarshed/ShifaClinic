@@ -620,14 +620,6 @@ namespace ShifaClinic.Accounts
             dgvVisit.Columns["Total"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
         }
 
-        private void btnAdd_Click(object sender, EventArgs e)
-        {
-            this.bindServicesGrid();
-            this.calculateTotal();
-
-            cmbServices.SelectedIndex = 0;
-            lblDocFee.Text = "0";
-        }
 
         private void cmbServices_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -649,7 +641,6 @@ namespace ShifaClinic.Accounts
                 this.bindDoctorCombobox();
             }
         }
-
         private void cmbDoctorDepartment_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (this.cmbDoctorDepartment.SelectedIndex > 0)
@@ -662,13 +653,6 @@ namespace ShifaClinic.Accounts
                 this.bindDoctorCombobox(_departmentId);
             }
         }
-
-        private void btnSave_Click(object sender, EventArgs e)
-        {
-            KeyEventArgs ke = new KeyEventArgs(Keys.Enter);
-            txtPaidAmount_KeyDown(txtPaidAmount, ke);
-        }
-
         private void cmbDoctor_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbDoctor.SelectedIndex > 0)
@@ -700,22 +684,6 @@ namespace ShifaClinic.Accounts
             }
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
-        {
-            updatePatientRecord();
-        }
-
-        private void btnSearch_Click(object sender, EventArgs e)
-        {
-            this.toggleUserList();
-        }
-
-        private void txtDiscount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            this.onlyAllowNumericValue(sender, e);
-
-        }
-
         private void dtpDOB_ValueChanged(object sender, EventArgs e)
         {
             var _s = sender as DateTimePicker;
@@ -723,7 +691,6 @@ namespace ShifaClinic.Accounts
             var _age = Utility.GetAge(_s.Value);
             txtAge.Text = _age.ToString();
         }
-
         private void gvPatientList_RowEnter(object sender, DataGridViewCellEventArgs e)
         {
             var _id = int.Parse(gvPatientList.Rows[e.RowIndex].Cells[0].Value.ToString());
@@ -748,6 +715,23 @@ namespace ShifaClinic.Accounts
                 }
             }
         }
+        private void dgvVisit_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            double _gross = 0;
+            foreach (DataGridViewRow row in dgvVisit.Rows)
+            {
+                var priceColumn = row.Cells["Price"];
+                if (!string.IsNullOrEmpty(priceColumn.Value.ToString()))
+                    _gross += Convert.ToDouble(priceColumn.Value);
+            }
+
+            lblGrandTotal.Text = string.Format("{0:0.00}", _gross);
+        }
+        private void gvPatientList_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            this.toggleUserList();
+            txtPatientName.Focus();
+        }
 
         private void gvPatientList_KeyDown(object sender, KeyEventArgs e)
         {
@@ -758,12 +742,21 @@ namespace ShifaClinic.Accounts
                 txtPatientName.Focus();
             }
         }
-
-        private void btnClose_Click(object sender, EventArgs e)
+        private void txtSearchCriteria_KeyDown(object sender, KeyEventArgs e)
         {
-            this.Close();
+            if (e.KeyCode == Keys.Down
+                || e.KeyCode == Keys.Up
+                || e.KeyCode == Keys.PageDown
+                || e.KeyCode == Keys.PageUp)
+            {
+                gvPatientList.NavigateGridView(e.KeyCode);
+                e.Handled = true;
+            }
+            else if (e.KeyData == Keys.Enter)
+            {
+                this.toggleUserList();
+            }
         }
-
         private void txtPaidAmount_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter && !this.validateForm(true))
@@ -795,212 +788,83 @@ namespace ShifaClinic.Accounts
             }
         }
 
-        private void dgvVisit_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        private void btnSearchPanelClose_Click(object sender, EventArgs e)
         {
-            double _gross = 0;
-            foreach (DataGridViewRow row in dgvVisit.Rows)
+            this.toggleUserList();
+        }
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            this.toggleUserList();
+        }
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            KeyEventArgs ke = new KeyEventArgs(Keys.Enter);
+            txtPaidAmount_KeyDown(txtPaidAmount, ke);
+        }
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            this.bindServicesGrid();
+            this.calculateTotal();
+
+            cmbServices.SelectedIndex = 0;
+            lblDocFee.Text = "0";
+        }
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+        private void txtControls_Click(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            textBox.SelectAll();
+        }
+        //private void btnPrintDetails_Click(object sender, EventArgs e)
+        //{
+        //    //if (this.validateForm(true))
+        //    //this.printReciept();
+        //    this.prepareAndPrintInvoice();
+        //}
+
+        private void lblGrandTotal_TextChanged(object sender, EventArgs e)
+        {
+            lblBillAmount.Text = string.Format("{0:0.00}", lblGrandTotal.Text);
+        }
+        private void txtPaidAmount_TextChanged(object sender, EventArgs e)
+        {
+            try
             {
-                var priceColumn = row.Cells["Price"];
-                if (!string.IsNullOrEmpty(priceColumn.Value.ToString()))
-                    _gross += Convert.ToDouble(priceColumn.Value);
+                double paid = Convert.ToDouble(txtPaidAmount.Text);
+                double total = Convert.ToDouble(lblGrandTotal.Text);
+                if (paid >= total)
+                {
+                    lblBanalce.Text = string.Format("{0:0.00}", total - paid);
+                }
             }
-
-            lblGrandTotal.Text = string.Format("{0:0.00}", _gross);
+            catch (Exception ex)
+            {
+                lblBanalce.Text = string.Format("{0:0.00}", 0);
+            }
         }
-
-        private void txtDiscount_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtDiscountInPercentage_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtPaidAmount_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtWeight_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtAge_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtPatientName_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtMobile_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtHight_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtBloodPressure_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtPatientName_Leave(object sender, EventArgs e)
-        {
-            this.validateForm();
-        }
-
-        private void btnPrintDetails_Click(object sender, EventArgs e)
-        {
-            //if (this.validateForm(true))
-            //this.printReciept();
-            this.prepareAndPrintInvoice();
-        }
-
-        private void btnNew_Click(object sender, EventArgs e)
-        {
-            this.resetform();
-        }
-
-        private void txtPaidAmount_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            onlyAllowNumericValue(sender, e);
-        }
-
-        private void txtWeight_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            onlyAllowNumericValue(sender, e);
-        }
-
-        private void txtAge_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            onlyAllowNumericValue(sender, e);
-        }
-
-        private void txtHight_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            onlyAllowNumericValue(sender, e);
-        }
-
-        private void txtBloodPressure_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            onlyAllowNumericValue(sender, e);
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtWeight_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label15_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label11_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label12_Click(object sender, EventArgs e)
-        {
-
-        }
-
+    
         private void gvPatientList_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
         {
             gvPatientList.Visible = true;
         }
 
-        private void txtSearchCriteria_KeyDown(object sender, KeyEventArgs e)
+        private void cmbServices_Leave(object sender, EventArgs e)
         {
-            if (e.KeyCode == Keys.Down
-                || e.KeyCode == Keys.Up
-                || e.KeyCode == Keys.PageDown
-                || e.KeyCode == Keys.PageUp)
-            {
-                gvPatientList.NavigateGridView(e.KeyCode);
-                e.Handled = true;
-            }
-            else if (e.KeyData == Keys.Enter)
-            {
-                this.toggleUserList();
-            }
+            if (cmbServices.SelectedItem is null)
+                MessageBox.Show("Invalid service please try again.",
+                    "ERROR",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
         }
-
-        private void gvPatientList_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            this.toggleUserList();
-            txtPatientName.Focus();
-        }
-
-        private void txtSearchCriteria_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            /*
-             gvPatientList.FindInColumns(
-                new String[] {
-                    "gvPatientName",
-                    "gvPatientMobile"
-                },
-                txtSearchCriteria.Text);
-            */
-            this.bindPatientList(txtSearchCriteria.Text.Trim());
-        }
-
-        private void txtMobile_Leave(object sender, EventArgs e)
+        private void txtControl_Leave(object sender, EventArgs e)
         {
             this.validateForm();
         }
 
-        private void txtPaidAmount_Leave(object sender, EventArgs e)
-        {
-            this.validateForm();
-        }
-
-        private void btnSearchPanelClose_Click(object sender, EventArgs e)
-        {
-            this.toggleUserList();
-        }
-
-        private void txtBloodPressureLower_Click(object sender, EventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            textBox.SelectAll();
-        }
-
-        private void txtBloodPressureLower_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtControls_KeyPress(object sender, KeyPressEventArgs e)
         {
             onlyAllowNumericValue(sender, e);
         }
@@ -1034,29 +898,6 @@ namespace ShifaClinic.Accounts
             }
 
         }
-
-        private void lblGrandTotal_TextChanged(object sender, EventArgs e)
-        {
-            lblBillAmount.Text = string.Format("{0:0.00}", lblGrandTotal.Text);
-        }
-
-        private void txtPaidAmount_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                double paid = Convert.ToDouble(txtPaidAmount.Text);
-                double total = Convert.ToDouble(lblGrandTotal.Text);
-                if (paid >= total)
-                {
-                    lblBanalce.Text = string.Format("{0:0.00}", total - paid);
-                }
-            }
-            catch (Exception ex)
-            {
-                lblBanalce.Text = string.Format("{0:0.00}", 0);
-            }
-        }
-
         private void dgvVisit_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex == dgvVisit.Columns["btnDelete"].Index)
@@ -1066,13 +907,5 @@ namespace ShifaClinic.Accounts
             }
         }
 
-        private void cmbServices_Leave(object sender, EventArgs e)
-        {
-            if (cmbServices.SelectedItem is null)
-                MessageBox.Show("Invalid service please try again.",
-                    "ERROR",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-        }
     }
 }

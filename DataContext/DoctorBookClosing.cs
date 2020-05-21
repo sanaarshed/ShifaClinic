@@ -11,13 +11,13 @@ namespace ShifaClinic.DataContext
     {
         public int id { get; set; }
 
-        public int? docId { get; set; }
+        public int? doctorId { get; set; }
 
-        public Double? total { get; set; }
+        public double? total { get; set; }
 
         public int? balance { get; set; }
 
-        public Double? paidAmount { get; set; }
+        public double? paidAmount { get; set; }
 
         public DateTime createDate { get; set; }
 

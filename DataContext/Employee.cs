@@ -14,7 +14,7 @@ namespace ShifaClinic.DataContext
             Salaries = new HashSet<Salary>();
         }
 
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    
         public int id { get; set; }
 
         public int? designationId { get; set; }

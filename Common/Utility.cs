@@ -64,7 +64,7 @@ namespace ShifaClinic.Common
             System.Data.DataTable dt = new System.Data.DataTable();
             try
             {
-                dt.TableName = "localVehicleDetails";
+                dt.TableName = "localTableName";
 
                 foreach (System.Reflection.PropertyInfo property in classObject.GetType().GetProperties())
                 {
@@ -81,6 +81,7 @@ namespace ShifaClinic.Common
                     newRow[property.Name] = classObject.GetType().GetProperty(property.Name).GetValue(classObject, null);
                 }
 
+                
                 dt.Rows.Add(newRow);
                 return dt;
             }

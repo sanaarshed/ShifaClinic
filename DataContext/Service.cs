@@ -12,6 +12,7 @@ namespace ShifaClinic.DataContext
         public Service()
         {
             BillDetails = new HashSet<BillDetail>();
+            DoctorBookClosingDetails = new HashSet<DoctorBookClosingDetail>();
             DoctorShareConfigurations = new HashSet<DoctorShareConfiguration>();
             DoctorShareConfigurationHistories = new HashSet<DoctorShareConfigurationHistory>();
             InvestorShareConfigurations = new HashSet<InvestorShareConfiguration>();
@@ -27,7 +28,7 @@ namespace ShifaClinic.DataContext
         [StringLength(1000)]
         public string description { get; set; }
 
-        public Double? price { get; set; }
+        public double? price { get; set; }
 
         public int? createdBy { get; set; }
 
@@ -39,6 +40,9 @@ namespace ShifaClinic.DataContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BillDetail> BillDetails { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorBookClosingDetail> DoctorBookClosingDetails { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorShareConfiguration> DoctorShareConfigurations { get; set; }
